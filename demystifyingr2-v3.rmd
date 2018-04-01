@@ -150,8 +150,8 @@ need the knitr package to do that so let's install that now. **Uncomment** the
 following two lines of code and run them.
 
 ```{r}
-install.packages('knitr', dependencies = T)
-library(knitr)
+#install.packages('knitr', dependencies = T)
+#library(knitr)
 ```
 
 Once you've installed knitr, **comment** out the two lines of code above.
