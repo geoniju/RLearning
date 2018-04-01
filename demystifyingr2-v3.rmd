@@ -168,6 +168,7 @@ OR hp (horsepower) less than 60? Create an R chunk of code to answer the questio
 
 ```{r}
 subset(mtcars,mpg>=30|hp<60)
+mtcars[mtcars$mpg>=30 | mtcars$hp<60,]
 ```
 
 
