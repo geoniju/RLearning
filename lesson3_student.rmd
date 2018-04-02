@@ -12,7 +12,11 @@ Notes:
 Notes:
 
 ```{r Pseudo-Facebook User Data}
-
+getwd()
+list.files()
+pf<-read.csv('pseudo_facebook.tsv',sep='\t')
+pf<-read.delim('pseudo_facebook.tsv')
+names(pf)
 ```
 
 ***
@@ -21,8 +25,15 @@ Notes:
 Notes:
 
 ```{r Histogram of Users\' Birthdays}
-install.packages('ggplot2')
+#install.packages('ggplot2')
 library(ggplot2)
+qplot(x=dob_day,data=pf) +
+  scale_x_continuous(breaks=1:31)
+
+##ggplot equivalent
+ggplot(aes(x = dob_day), data = pf) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = 1:31)
 ```
 
 ***
@@ -30,28 +41,27 @@ library(ggplot2)
 #### What are some things that you notice about this histogram?
 Response:
 
-***
+
 
 ### Moira's Investigation
 Notes:
 
-***
+
 
 ### Estimating Your Audience Size
 Notes:
 
-***
+
 
 #### Think about a time when you posted a specific message or shared a photo on Facebook. What was it?
 Response:
 
 #### How many of your friends do you think saw that post?
 Response:
-
+50
 #### Think about what percent of your friends on Facebook see any posts or comments that you make in a month. What percent do you think that is?
 Response:
-
-***
+10
 
 ### Perceived Audience Size
 Notes:
@@ -61,7 +71,14 @@ Notes:
 Notes:
 
 ```{r Faceting}
-
+qplot(x=dob_day,data=pf) + 
+  scale_x_continuous(breaks=1:31) +
+  facet_wrap(~dob_month,ncol=3)
+##equivalent ggplot
+ggplot(data = pf, aes(x = dob_day)) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = 1:31) +
+  facet_wrap(~dob_month)
 ```
 
 #### Let’s take another look at our plot. What stands out to you here?
@@ -87,7 +104,11 @@ Notes:
 #### What code would you enter to create a histogram of friend counts?
 
 ```{r Friend Count}
+qplot(x=friend_count,data=pf,xlim=c(0,1000))
 
+#other way
+qplot(x=friend_count,data=pf)+
+  scale_x_continuous(limits=c(0,1000))
 ```
 
 #### How is this plot similar to Moira's first plot?
@@ -114,9 +135,10 @@ Notes:
 ```{r Faceting Friend Count}
 # What code would you add to create a facet the histogram by gender?
 # Add it to the code below.
-qplot(x = friend_count, data = pf, binwidth = 10) +
+qplot(x = friend_count, data = pf, binwidth = 25) +
   scale_x_continuous(limits = c(0, 1000),
-                     breaks = seq(0, 1000, 50))
+                     breaks = seq(0, 1000, 50))+
+  facet_wrap(~gender)
 ```
 
 ***
@@ -125,7 +147,10 @@ qplot(x = friend_count, data = pf, binwidth = 10) +
 Notes:
 
 ```{r Omitting NA Values}
-
+qplot(x = friend_count, data = subset(pf,!is.na(gender)), binwidth = 25) +
+  scale_x_continuous(limits = c(0, 1000),
+                     breaks = seq(0, 1000, 50))+
+  facet_wrap(~gender)
 ```
 
 ***
@@ -134,6 +159,8 @@ Notes:
 Notes:
 
 ```{r Statistics \'by\' Gender}
+table(pf$gender)
+by(pf$friend_count,pf$gender,summary)
 
 ```
 
