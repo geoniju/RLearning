@@ -26,7 +26,7 @@ Notes:
 
 ```{r Histogram of Users\' Birthdays}
 #install.packages('ggplot2')
-library(ggplot2)
+#library(ggplot2)
 qplot(x=dob_day,data=pf) +
   scale_x_continuous(breaks=1:31)
 
@@ -84,6 +84,8 @@ ggplot(data = pf, aes(x = dob_day)) +
 #### Let’s take another look at our plot. What stands out to you here?
 Response:
 
+Most of the users have date of birth as Jan 1st.
+
 ***
 
 ### Be Skeptical - Outliers and Anomalies
@@ -107,8 +109,8 @@ Notes:
 qplot(x=friend_count,data=pf,xlim=c(0,1000))
 
 #other way
-qplot(x=friend_count,data=pf)+
-  scale_x_continuous(limits=c(0,1000))
+qplot(x=friend_count,data=pf)
+
 ```
 
 #### How is this plot similar to Moira's first plot?
@@ -166,20 +168,22 @@ by(pf$friend_count,pf$gender,summary)
 
 #### Who on average has more friends: men or women?
 Response:
+Women
 
 #### What's the difference between the median friend count for women and men?
 Response:
-
+22
 #### Why would the median be a better measure than the mean?
 Response:
-
+Median is more robust statistic than mean
 ***
 
 ### Tenure
 Notes:
 
 ```{r Tenure}
-
+qplot(x=tenure,data=pf,color=I('black'),fill=I('#099DD9'),
+      binwidth=30)
 ```
 
 ***
@@ -187,7 +191,8 @@ Notes:
 #### How would you create a histogram of tenure by year?
 
 ```{r Tenure Histogram by Year}
-
+qplot(x=tenure/365,data=pf,color=I('black'),fill=I('#099DD9'))+
+  scale_x_continuous(breaks=seq(1,7,1),lim=c(0,7))
 ```
 
 ***
@@ -196,7 +201,11 @@ Notes:
 Notes:
 
 ```{r Labeling Plots}
-
+qplot(x=tenure/365,data=pf,
+      xlab='Number of years using facebook',
+      ylab='Number of users in sample',
+      color=I('black'),fill=I('#F79420'))+
+  scale_x_continuous(breaks=seq(1,7,1),lim=c(0,7))
 ```
 
 ***
@@ -205,13 +214,14 @@ Notes:
 Notes:
 
 ```{r User Ages}
-
+qplot(x=age,data=pf,binwidth=1,color=I('black'),fill=I('#F79420'))+
+  scale_x_continuous(breaks=seq(10,113,5),limits=c(10,113))
 ```
 
 #### What do you notice?
 Response:
 
-***
+Most of the users are between the age range of 15 to 25. There is no user below the age 13 which is because the minimum age for signing up facebook is 13. Also we can we see some users with age more than 100 which may be an exaggeration and may not be true as there cant be a facebook user with age more than 100!
 
 ### The Spread of Memes
 Notes:
