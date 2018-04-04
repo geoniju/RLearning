@@ -62,15 +62,17 @@ Notes:
 ```{r Coord_trans()}
 ggplot(aes(x=age,y=friend_count),data=pf) + 
   geom_jitter(alpha=1/20,position=position_jitter(h=0)) +
-  xlim(13,90) +
-  coord_trans(x = "sqrt")
-summary(pf$age)
+  xlim(13,90)
 ```
 
 #### Look up the documentation for coord_trans() and add a layer to the plot that transforms friend_count using the square root function. Create your plot!
 
 ```{r}
-
+ggplot(aes(x=age,y=friend_count),data=pf) + 
+  geom_jitter(alpha=1/20,position=position_jitter(h=0)) +
+  xlim(13,90) +
+  coord_trans(y = "sqrt")
+summary(pf$age)
 ```
 
 #### What do you notice?
@@ -78,10 +80,14 @@ summary(pf$age)
 ***
 
 ### Alpha and Jitter
+Explore the relationship between friends initiated vs age
+
 Notes:
 
 ```{r Alpha and Jitter}
-
+ggplot(aes(x=age,y=friendships_initiated),data=pf) +
+  geom_point(alpha=1/10,position=position_jitter(h=0)) +
+  coord_trans(y='sqrt')
 ```
 
 ***
