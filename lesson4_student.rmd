@@ -15,7 +15,16 @@ Notes:
 library(ggplot2)
 pf <- read.csv('pseudo_facebook.tsv',sep='\t')
 qplot(x=age,y=friend_count,data=pf)
-qplot(age,friend_count,data=pf)
+
+qplot(age,friend_count,data=pf) +
+  xlim(13,90)
+
+p1 <- ggplot(aes(x=age,y=friend_count),data=pf) + 
+  geom_point()
+p1 <- ggplot(aes(x=age,y=friend_count),data=pf) + 
+  geom_jitter()
+grid.arrange(p1,p2,ncol=2)
+
 ```
 
 ***
@@ -30,13 +39,19 @@ Notes:
 
 ```{r ggplot Syntax}
 ggplot(aes(x=age,y=friend_count),data=pf) + 
-  geom_point(alpha=1/20) +
+  geom_point(alpha=1/10) +
   xlim(13,90)
 
+install.packages("gridExtra")
+library(gridExtra)
+grid.arrange(p1,p2,p3,ncol=3)
+
+
 ggplot(aes(x=age,y=friend_count),data=pf) + 
-  geom_jitter(alpha=1/20,position=position_jitter(h=0)) +
-  xlim(13,90) +
-  coord_trans(x = "sqrt")
+  geom_point(alpha=1/10,position=position_jitter(h=0)) +
+  xlim(13,90) 
+#+
+#  coord_trans(y = "sqrt")
 summary(pf$age)
 ```
 
@@ -86,7 +101,11 @@ Notes:
 
 ```{r Alpha and Jitter}
 ggplot(aes(x=age,y=friendships_initiated),data=pf) +
-  geom_point(alpha=1/10,position=position_jitter(h=0)) +
+  geom_jitter(alpha=1/10,position=position_jitter(h=0)) +
+  coord_trans(y='sqrt')
+
+ggplot(aes(x=age,y=friendships_initiated),data=pf) +
+  geom_point(shape='.',position=position_jitter(h=0)) +
   coord_trans(y='sqrt')
 ```
 
@@ -101,7 +120,7 @@ Notes:
 Notes:
 
 ```{r Conditional Means}
-
+  
 ```
 
 Create your plot!
