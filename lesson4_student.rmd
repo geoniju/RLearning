@@ -19,11 +19,15 @@ qplot(x=age,y=friend_count,data=pf)
 qplot(age,friend_count,data=pf) +
   xlim(13,90)
 
-p1 <- ggplot(aes(x=age,y=friend_count),data=pf) + 
+p1 <- ggplot(aes(cyl,hwy),data=mpg) + 
   geom_point()
-p1 <- ggplot(aes(x=age,y=friend_count),data=pf) + 
+p2 <- ggplot(aes(cyl,hwy),data=mpg) + 
   geom_jitter()
-grid.arrange(p1,p2,ncol=2)
+p3 <- ggplot(aes(cyl,hwy),data=mpg) + 
+  geom_jitter(width=0.5)
+grid.arrange(p1,p2,p3,ncol=3)
+
+
 
 ```
 
@@ -120,13 +124,40 @@ Notes:
 Notes:
 
 ```{r Conditional Means}
+install.packages('dplyr')
+library(dplyr)
+age_groups <- group_by(pf,age)
+fc_by_age <- summarise(age_groups,mean(friend_count))
   
 ```
 
 Create your plot!
 
 ```{r Conditional Means Plot}
+library(dplyr)
+age_groups <- group_by(pf,age)
 
+pf.fc_by_age <- summarise(age_groups,
+          friend_count_mean=mean(friend_count),
+          friend_count_median=median(friend_count),
+          n=n())
+
+pf.fc_by_age <- arrange(pf.fc_by_age,age)
+head(pf.fc_by_age)
+
+
+pf.fc_by_age <- 
+pf %>%
+  group_by(age) %>%
+  summarise(friend_count_mean=mean(friend_count),
+            friend_count_median=median(friend_count),
+            n=n()) %>%
+  arrange(age)
+  
+head(pf.fc_by_age,20)
+
+ggplot(aes(age,friend_count_mean),data=pf.fc_by_age) +
+  geom_line()
 ```
 
 ***
@@ -135,7 +166,15 @@ Create your plot!
 Notes:
 
 ```{r Overlaying Summaries with Raw Data}
-
+ggplot(aes(x=age,y=friendships_initiated),data=pf) +
+  geom_point(shape='.',position=position_jitter(h=0),
+             color='orange') +
+  coord_trans(y='sqrt') +
+  geom_line(stat='summary', fun.y=mean) +
+  geom_line(stat='summary', fun.y=quantile, probs=.1,
+            linetype=2,color='blue') +
+  geom_line(stat='summary', fun.y=quantile, probs=.9,
+            linetype=2,color='blue')
 ```
 
 #### What are some of your observations of the plot?
