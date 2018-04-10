@@ -166,21 +166,24 @@ ggplot(aes(age,friend_count_mean),data=pf.fc_by_age) +
 Notes:
 
 ```{r Overlaying Summaries with Raw Data}
-ggplot(aes(x=age,y=friendships_initiated),data=pf) +
-  geom_point(shape='.',position=position_jitter(h=0),
+ggplot(aes(x=age,y=friend_count),data=pf) +
+  coord_cartesian(xlim = c(13, 70),ylim=c(0,1000)) +
+  geom_point(alpha=0.05,position=position_jitter(h=0),
              color='orange') +
-  coord_trans(y='sqrt') +
+  #coord_trans(y='sqrt') +
   geom_line(stat='summary', fun.y=mean) +
-  geom_line(stat='summary', fun.y=quantile, probs=.1,
+  geom_line(stat='summary', fun.y=quantile, fun.args=list(probs=.1),
             linetype=2,color='blue') +
-  geom_line(stat='summary', fun.y=quantile, probs=.9,
+   geom_line(stat='summary', fun.y=quantile, fun.args=list(probs=.5),
+            color='blue') +
+  geom_line(stat='summary', fun.y=quantile, fun.args=list(probs=.9),
             linetype=2,color='blue')
 ```
 
 #### What are some of your observations of the plot?
 Response:
 
-***
+Having more than 100 friends is quite rare. 
 
 ### Moira: Histogram Summary and Scatterplot
 See the Instructor Notes of this video to download Moira's paper on perceived audience size and to see the final plot.
@@ -193,7 +196,7 @@ Notes:
 Notes:
 
 ```{r Correlation}
-
+cor.test(pf$friend_count,pf$age)
 ```
 
 Look up the documentation for the cor.test function.
