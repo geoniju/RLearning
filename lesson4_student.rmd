@@ -196,7 +196,9 @@ Notes:
 Notes:
 
 ```{r Correlation}
-cor.test(pf$friend_count,pf$age)
+
+cor.test(pf$friend_count,pf$age,method='pearson')
+with(subset(pf,age<=70),cor.test(friend_count,age,method='pearson'))
 ```
 
 Look up the documentation for the cor.test function.
@@ -210,7 +212,7 @@ Response:
 Notes:
 
 ```{r Correlation on Subsets}
-with(                 , cor.test(age, friend_count))
+with(subset(pf,age<=70),cor.test(friend_count,age))
 ```
 
 ***
@@ -224,7 +226,10 @@ Notes:
 Notes:
 
 ```{r}
-
+ggplot(aes(www_likes_received,likes_received),data=pf) +
+  coord_cartesian(xlim = c(0, 5000),ylim=c(0,10000)) +
+  geom_point(position=position_jitter(h=0),
+             color='orange')
 ```
 
 ***
@@ -233,12 +238,18 @@ Notes:
 Notes:
 
 ```{r Strong Correlations}
-
+ggplot(aes(www_likes_received,likes_received),data=pf) +
+  geom_point() +
+  xlim(0,quantile(pf$www_likes_received,0.95)) +
+  ylim(0,quantile(pf$likes_received,0.95)) +
+  geom_smooth(method='lm',color='red') 
+  
 ```
 
 What's the correlation betwen the two variables? Include the top 5% of values for the variable in the calculation and round to 3 decimal places.
 
 ```{r Correlation Calcuation}
+with(pf,cor.test(www_likes_received,likes_received))
 
 ```
 
@@ -257,11 +268,14 @@ Notes:
 ```{r More Caution With Correlation}
 install.packages('alr3')
 library(alr3)
+data(Mitchell)
 ```
 
 Create your plot!
 
 ```{r Temp vs Month}
+ggplot(aes(Month,Temp),data=Mitchell) +
+  geom_point()
 
 ```
 
@@ -269,12 +283,13 @@ Create your plot!
 
 ### Noisy Scatterplots
 a. Take a guess for the correlation coefficient for the scatterplot.
+0.02
 
 b. What is the actual correlation of the two variables?
 (Round to the thousandths place)
 
 ```{r Noisy Scatterplots}
-
+with(Mitchell,cor.test(Month,Temp))
 ```
 
 ***
