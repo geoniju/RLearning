@@ -53,9 +53,13 @@ just to help you get started.
 names(wine_data)
 summary(wine_data)
 str(wine_data)
-ggplot(aes(fixed.acidity),data=wine_data) +
-  geom_histogram() 
-```
+
+wine_data$quality <- factor(wine_data$quality,ordered=T)
+wine_data$quality_rating <- ordered(ifelse(wine_data$quality<5,'bad',ifelse(wine_data$quality<8,'average','good')))
+
+ggplot(aes(wine_data$pH),data=wine_data) +
+  geom_bar() 
+  ```
 
 > **Tip**: Make sure that you leave a blank line between the start / end of
 each code block and the end / start of your Markdown text so that it is

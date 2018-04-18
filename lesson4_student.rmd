@@ -298,8 +298,12 @@ with(Mitchell,cor.test(Month,Temp))
 Notes:
 
 ```{r Making Sense of Data}
+ggplot(data=Mitchell,aes(x=Month,y=Temp)) +
+  geom_point() +
+  scale_x_discrete(breaks=seq(0,203,12))
 
 ```
+
 
 ***
 
@@ -317,7 +321,8 @@ Notes:
 Notes:
 
 ```{r Understanding Noise: Age to Age Months}
-
+ggplot(aes(x=age,y=friend_count_mean),data=pf.fc_by_age) +
+  geom_line()
 ```
 
 ***
@@ -325,7 +330,14 @@ Notes:
 ### Age with Months Means
 
 ```{r Age with Months Means}
+pf$age_with_months <- with(pf,age  + (1-pf$dob_month)/12
+                           
+library(dplyr)
 
+pf.fc_by_age_months <- pf %>%
+  group_by(age_with_months) %>%
+  summarise(friend_count_mean) = mean(friend_count),  friend_count_median=median(friend_count),n=n()) %>%
+                           
 ```
 
 Programming Assignment
