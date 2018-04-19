@@ -59,13 +59,189 @@ wine_data$quality_rating <- ordered(ifelse(wine_data$quality<5,'bad',ifelse(wine
 
 summary(wine_data$quality_rating)
 ggplot(aes(x=quality_rating),data=wine_data) +
-  geom_bar(width=1,color='red',fill='black')
+  geom_bar(width=1,color='black',fill='red')
 
+
+
+
+ggplot(aes(x=fixed.acidity),data=wine_data) +
+  geom_histogram(binwidth=.1,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+
+ggplot(aes(x=1,y=fixed.acidity),data=wine_data) +
+  geom_boxplot(color='black',fill='red') +
+  scale_x_discrete(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+summary(wine_data$fixed.acidity)
+
+
+ggplot(aes(x=volatile.acidity),data=wine_data) +
+  geom_histogram(binwidth=.1,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+
+ggplot(aes(x=1,y=volatile.acidity),data=wine_data) +
+  geom_boxplot(color='black',fill='red') +
+  scale_x_discrete(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+summary(wine_data$volatile.acidity)
+
+ggplot(aes(x=citric.acid),data=wine_data) +
+  geom_histogram(binwidth=.1,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+
+ggplot(aes(x=1,y=citric.acid),data=wine_data) +
+  geom_boxplot(color='black',fill='red') +
+  scale_x_discrete(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+summary(wine_data$citric.acid)
+
+
+ggplot(aes(x=residual.sugar),data=wine_data) +
+  geom_histogram(binwidth=.1,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+
+ggplot(aes(x=1,y=residual.sugar),data=wine_data) +
+  geom_boxplot(color='black',fill='red') +
+  scale_x_discrete(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+summary(wine_data$residual.sugar)
+
+
+ggplot(aes(x=chlorides),data=wine_data) +
+  geom_histogram(binwidth=.1,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+
+ggplot(aes(x=1,y=chlorides),data=wine_data) +
+  geom_boxplot(color='black',fill='red') +
+  scale_x_discrete(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+summary(wine_data$chlorides)
+
+ggplot(aes(x=free.sulfur.dioxide),data=wine_data) +
+  geom_histogram(binwidth=.1,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+
+ggplot(aes(x=1,y=free.sulfur.dioxide),data=wine_data) +
+  geom_boxplot(color='black',fill='red') +
+  scale_x_discrete(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+summary(wine_data$free.sulfur.dioxide)
+
+
+ggplot(aes(x=total.sulfur.dioxide),data=wine_data) +
+  geom_histogram(binwidth=.1,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+
+ggplot(aes(x=1,y=total.sulfur.dioxide),data=wine_data) +
+  geom_boxplot(color='black',fill='red') +
+  scale_x_discrete(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+summary(wine_data$total.sulfur.dioxide)
+
+ggplot(aes(x=density),data=wine_data) +
+  geom_histogram(binwidth=.1,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+
+ggplot(aes(x=1,y=density),data=wine_data) +
+  geom_boxplot(color='black',fill='red') +
+  scale_x_discrete(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+summary(wine_data$density)
 
 ggplot(aes(x=pH),data=wine_data) +
-  geom_histogram() +
-  scale_x_continuous(breaks=seq(2,4,0.1),limits=c(2.5,4)) 
+  geom_histogram(binwidth=.1,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(),limits=c()) 
   #coord_cartesian(c(3.4,3.6))
+
+
+
+ggplot(aes(x=1,y=pH),data=wine_data) +
+  geom_boxplot(color='black',fill='red') +
+  scale_x_discrete(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+summary(wine_data$pH)
+
+
+ggplot(aes(x=sulphates),data=wine_data) +
+  geom_histogram(binwidth=.1,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+
+ggplot(aes(x=1,y=sulphates),data=wine_data) +
+  geom_boxplot(color='black',fill='red') +
+  scale_x_discrete(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+summary(wine_data$sulphates)
+
+ggplot(aes(x=alcohol),data=wine_data) +
+  geom_histogram(binwidth=.1,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+
+ggplot(aes(x=1,y=alcohol),data=wine_data) +
+  geom_boxplot(color='black',fill='red') +
+  scale_x_discrete(breaks=seq(),limits=c()) 
+  #coord_cartesian(c(3.4,3.6))
+
+
+summary(wine_data$alcohol)
+
+
+
+
+
+
+
+
+
 
 ```
 
