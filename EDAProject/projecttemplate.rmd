@@ -57,25 +57,25 @@ str(wine_data)
 wine_data$quality <- factor(wine_data$quality,ordered=T)
 wine_data$quality_rating <- ordered(ifelse(wine_data$quality<5,'bad',ifelse(wine_data$quality<8,'average','good')))
 
+
 summary(wine_data$quality_rating)
 ggplot(aes(x=quality_rating),data=wine_data) +
   geom_bar(width=1,color='black',fill='red')
 
 
 
-
+range(wine_data$fixed.acidity)
 ggplot(aes(x=fixed.acidity),data=wine_data) +
-  geom_histogram(binwidth=.1,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
+  geom_histogram(binwidth=.5,color='black',fill='red') +
+  geom_freqpoly(binwidth=.5,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(4.5,16,1)) 
 
 
 ggplot(aes(x=1,y=fixed.acidity),data=wine_data) +
-  geom_boxplot(color='black',fill='red') +
-  scale_x_discrete(breaks=seq(),limits=c()) 
+    geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  stat_summary(fun.y="mean", geom = "point", shape=23, size =3, fill="pink") +
+  scale_y_continuous(breaks=seq(0,18,.5)) 
   #coord_cartesian(c(3.4,3.6))
-
 
 summary(wine_data$fixed.acidity)
 
