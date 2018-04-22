@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 TITLE by YOUR_NAME_HERE
 ========================================================
 
@@ -24,6 +29,9 @@ a margin line to help you keep track of this guideline!
 # want it to. This will clean up the flow of your report.
 
 library(ggplot2)
+library(gridExtra)
+library(dplyr)
+library(corrplot)
 ```
 
 ```{r echo=FALSE, Load_the_Data}
@@ -58,16 +66,10 @@ wine_data$quality <- factor(wine_data$quality,ordered=T)
 wine_data$quality_rating <- ordered(ifelse(wine_data$quality<5,'bad',ifelse(wine_data$quality<8,'average','good')))
 
 
-summary(wine_data$quality_rating)
-ggplot(aes(x=quality_rating),data=wine_data) +
-  geom_bar(width=1,color='black',fill='red')
-
-
-
 range(wine_data$fixed.acidity)
 ggplot(aes(x=fixed.acidity),data=wine_data) +
   geom_histogram(binwidth=.5,color='black',fill='red') +
-  geom_freqpoly(binwidth=.5,color='black',fill='red') +
+  geom_freqpoly(binwidth=.5,color='black') +
   scale_x_continuous(breaks=seq(4.5,16,1)) 
 
 
@@ -80,168 +82,166 @@ ggplot(aes(x=1,y=fixed.acidity),data=wine_data) +
 summary(wine_data$fixed.acidity)
 
 
-ggplot(aes(x=volatile.acidity),data=wine_data) +
-  geom_histogram(binwidth=.1,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
+range(wine_data$volatile.acidity)
 
+ggplot(aes(x=volatile.acidity),data=wine_data) +
+  geom_histogram(binwidth=.05,color='black',fill='red') +
+  #geom_vline(xintercept=mode(wine_data$volatile.acidity),color='blue') +
+  geom_freqpoly(binwidth=.05,color='black') +
+  scale_x_continuous(breaks=seq(0.12,1.58,.1)) 
 
 
 ggplot(aes(x=1,y=volatile.acidity),data=wine_data) +
-  geom_boxplot(color='black',fill='red') +
-  scale_x_discrete(breaks=seq(),limits=c()) 
+    geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  stat_summary(fun.y="mean", geom = "point", shape=23, size =3, fill="pink") +
+  scale_y_continuous(breaks=seq(0,2,.1))  
   #coord_cartesian(c(3.4,3.6))
 
 
 summary(wine_data$volatile.acidity)
 
+range(wine_data$citric.acid)
+str(wine_data$citric.acid)
 ggplot(aes(x=citric.acid),data=wine_data) +
-  geom_histogram(binwidth=.1,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
+  geom_histogram(binwidth=.05,color='black',fill='red') +
+  #geom_vline(xintercept=mode(wine_data$volatile.acidity),color='blue') +
+  geom_freqpoly(binwidth=.05,color='black') +
+  scale_x_continuous(breaks=seq(0,1,.1)) 
 
 
 ggplot(aes(x=1,y=citric.acid),data=wine_data) +
-  geom_boxplot(color='black',fill='red') +
-  scale_x_discrete(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
+    geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  stat_summary(fun.y="mean", geom = "point", shape=23, size =3, fill="pink") +
+  scale_y_continuous(breaks=seq(0,1,.05))
 
 summary(wine_data$citric.acid)
 
-
+range(wine_data$residual.sugar)
 ggplot(aes(x=residual.sugar),data=wine_data) +
-  geom_histogram(binwidth=.1,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
-
-
+  geom_histogram(binwidth=.2,color='black',fill='red') +
+  geom_freqpoly(binwidth=.2,color='black') +
+  scale_x_continuous(breaks=seq(0.5,16,.5),limits=c(0.5,7))
+  
 ggplot(aes(x=1,y=residual.sugar),data=wine_data) +
-  geom_boxplot(color='black',fill='red') +
-  scale_x_discrete(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
+  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  stat_summary(fun.y="mean",geom="point",shape=23,size=3,fill="pink") +
+  scale_y_continuous(breaks=seq(0.5,16,.5)) +
+  coord_cartesian(ylim=c(0.5,7))
 
 summary(wine_data$residual.sugar)
 
 
+range(wine_data$chlorides)
 ggplot(aes(x=chlorides),data=wine_data) +
-  geom_histogram(binwidth=.1,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
-
+  geom_histogram(binwidth=0.01,color='black',fill='red') +
+  geom_freqpoly(binwidth=0.01,color='black') +
+  scale_x_continuous(breaks=seq(0.01,0.65,0.02),limits=c(0,0.2))
 
 ggplot(aes(x=1,y=chlorides),data=wine_data) +
-  geom_boxplot(color='black',fill='red') +
-  scale_x_discrete(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
+  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
+  scale_y_continuous(breaks=seq(0.01,0.65,0.02)) +
+  coord_cartesian(ylim=c(0,0.2))
 
 summary(wine_data$chlorides)
 
+
+range(wine_data$free.sulfur.dioxide)
 ggplot(aes(x=free.sulfur.dioxide),data=wine_data) +
-  geom_histogram(binwidth=.1,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
-
+  geom_histogram(binwidth=5,color='black',fill='red') +
+  geom_freqpoly(binwidth=5,color='black') +
+  scale_x_continuous(breaks=seq(0,72,5))
 
 ggplot(aes(x=1,y=free.sulfur.dioxide),data=wine_data) +
-  geom_boxplot(color='black',fill='red') +
-  scale_x_discrete(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
+  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
+  scale_y_continuous(breaks=seq(0,72,5))
 
 summary(wine_data$free.sulfur.dioxide)
 
+range(wine_data$total.sulfur.dioxide)
+
 
 ggplot(aes(x=total.sulfur.dioxide),data=wine_data) +
-  geom_histogram(binwidth=.1,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
-
+  geom_histogram(binwidth=10,color='black',fill='red') +
+  geom_freqpoly(binwidth=10,color='black') +
+  scale_x_continuous(breaks=seq(5,175,10),limits=c(5,175))
 
 ggplot(aes(x=1,y=total.sulfur.dioxide),data=wine_data) +
-  geom_boxplot(color='black',fill='red') +
-  scale_x_discrete(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
+  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
+  scale_y_continuous(breaks=seq(5,175,10)) +
+  coord_cartesian(ylim=c(5,175))
 
 summary(wine_data$total.sulfur.dioxide)
 
-ggplot(aes(x=density),data=wine_data) +
-  geom_histogram(binwidth=.1,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
+ggplot(aes(x=total.sulfur.dioxide),data=wine_data) +
 
 
+range(wine_data$density)
 
+ggplot(aes(x=density),data=wine_data)  +
+  geom_histogram(binwidth=0.001,color='black',fill='red') +
+  geom_freqpoly(binwidth=0.001,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(0.9,1.01,0.0015))
+  
 ggplot(aes(x=1,y=density),data=wine_data) +
-  geom_boxplot(color='black',fill='red') +
-  scale_x_discrete(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
+  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
+  scale_y_continuous(breaks=(seq(0.9,1.01,0.0015))) 
 
 summary(wine_data$density)
 
+range(wine_data$pH)
+
 ggplot(aes(x=pH),data=wine_data) +
   geom_histogram(binwidth=.1,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
-
-
+  scale_x_continuous(breaks=seq(2,4.1,.1)) 
+  
 ggplot(aes(x=1,y=pH),data=wine_data) +
-  geom_boxplot(color='black',fill='red') +
-  scale_x_discrete(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
-
+  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
+  scale_y_continuous(breaks=seq(2,4.1,.1))
+  
 summary(wine_data$pH)
 
-
+range(wine_data$sulphates)
 ggplot(aes(x=sulphates),data=wine_data) +
-  geom_histogram(binwidth=.1,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
-
+  geom_histogram(binwidth=.05,color='black',fill='red') +
+  geom_freqpoly(binwidth=.05,color='black',fill='red') +
+  scale_x_continuous(breaks=seq(0,2,.1),limits=c(0.2,1.4)) 
 
 ggplot(aes(x=1,y=sulphates),data=wine_data) +
-  geom_boxplot(color='black',fill='red') +
-  scale_x_discrete(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
+  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
+  scale_y_continuous(breaks=seq(0,2,.1)) +
+  coord_cartesian(ylim=c(0.2,1.4))
 
 summary(wine_data$sulphates)
 
+
+range(wine_data$alcohol)
+
+grid.arrange(
 ggplot(aes(x=alcohol),data=wine_data) +
-  geom_histogram(binwidth=.1,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
-
-
-
+  geom_histogram(binwidth=.5,color='black',fill='red') +
+  geom_freqpoly(binwidth=.5,color='black') +
+  scale_x_continuous(breaks=seq(8,14,.5),limits=c(8,14)), 
+  
 ggplot(aes(x=1,y=alcohol),data=wine_data) +
-  geom_boxplot(color='black',fill='red') +
-  scale_x_discrete(breaks=seq(),limits=c()) 
-  #coord_cartesian(c(3.4,3.6))
+  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
+  scale_y_continuous(breaks=seq(8,14,.5)) +
+  coord_cartesian(ylim=c(8,14)))
 
 
 summary(wine_data$alcohol)
 
+ggplot(aes(x=quality_rating),data=wine_data) +
+  geom_bar(color='black',fill='red')
 
-
-
-
-
-
-
-
+str(wine_data$quality)
+summary(wine_data$quality_rating)
 
 ```
 
@@ -280,8 +280,124 @@ supporting variables. Try to look at relationships between supporting variables
 as well.
 
 ```{r echo=FALSE, Bivariate_Plots}
+wine_data$quality = as.numeric(wine_data$quality)
+str(wine_data)
+cor(wine_data)
+c <- cor(wine_data[c(1,1:13)])
+#symnum(c,abbr.colnames=FALSE)
+
+#install.packages("corrplot")
+corrplot(c, type = "lower", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
 
 ```
+From the above correlation plot below are the findings:
+
+Fixed acidity is positively correlated with density. This could be because with increase in the mass of the wine the acidic content also increase.
+
+Citric acid is positively correlated with fixed acidity. Since citric acid is part of fixed acidity content this is also true.
+
+Alcohol is negatively correlated with density. With increase in percentage of alcohol the mass of the wine will definitely decrease.
+
+Volatile acidity is negatively correlated with citric acid and quality. With higher amount of volatile acid the quality gets affected. 
+
+Quality is positively correlated with alcohol. With increase in alcohol the quality of the wine gets better although there could be other reasons or lurking variables for the increase in the quality with increase in alcohol.
+
+pH is negatively correlated with fixed acidity and citric acid. pH always decreases with increase in the acidic content.
+
+
+Let's visualize the above findings through plots to get a better intuition.
+
+
+```{r}
+
+ggplot(aes(x=quality,y=alcohol),data=wine_data) +
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_jitter(alpha=.5) +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
+  scale_y_continuous(breaks=seq(8,15,.5))
+
+range(wine_data$alcohol)
+```
+
+From the above plot we can see that higher alcohol content is associated with good quality rating and the mean of the alcohol percentage increases with increase in the quality. 
+
+```{r}
+ggplot(aes(x=fixed.acidity,y=citric.acid),data=wine_data) +
+  geom_point()
+```
+```{r}
+ggplot(aes(x=fixed.acidity,y=density),data=wine_data) +
+  geom_point()
+```
+```{r}
+ggplot(aes(x=density,y=alcohol),data=wine_data) +
+  geom_point()
+```
+```{r}
+ggplot(aes(x=fixed.acidity,y=volatile.acidity),data=wine_data) +
+  geom_point()
+```
+
+```{r}
+ggplot(aes(x=residual.sugar,y=alcohol),data=wine_data) +
+  geom_point()
+```
+
+
+```{r}
+ggplot(aes(x=quality,y=fixed.acidity),data=wine_data) +
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_jitter(alpha=.5) +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
+  scale_y_continuous(breaks=seq())
+```
+
+```{r}
+ggplot(aes(x=quality,y=density),data=wine_data) +
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_jitter(alpha=.5) +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
+  scale_y_continuous(breaks=seq())
+```
+
+```{r}
+ggplot(aes(x=quality,y=volatile.acidity),data=wine_data) +
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_jitter(alpha=.5) +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
+  scale_y_continuous(breaks=seq())
+```
+```{r}
+ggplot(aes(x=quality,y=chlorides),data=wine_data) +
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_jitter(alpha=.5) +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
+  scale_y_continuous(breaks=seq()) +
+  coord_cartesian(ylim=c(0.01,0.17))
+
+range(wine_data$chlorides)
+```
+```{r}
+ggplot(aes(x=quality,y=sulphates),data=wine_data) +
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_jitter(alpha=.5) +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
+  scale_y_continuous(breaks=seq()) +
+  coord_cartesian(ylim=c())
+  ```
+  
+```{r}
+ggplot(aes(x=quality,y=residual.sugar),data=wine_data) +
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_jitter(alpha=.5) +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
+  scale_y_continuous(breaks=seq()) +
+  coord_cartesian(ylim=c(.9,8))
+  ```
+range(wine_data$residual.sugar)
+
+
 
 # Bivariate Analysis
 
