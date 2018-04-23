@@ -341,32 +341,38 @@ From the above plot we can see that higher alcohol content is associated with go
 
 ```{r}
 ggplot(aes(x=fixed.acidity,y=citric.acid),data=wine_data) +
-  geom_point()
+  geom_point() +
+  geom_smooth(method='lm',color='red')
 ```
 ```{r}
 ggplot(aes(x=fixed.acidity,y=density),data=wine_data) +
-  geom_point()
+  geom_point() +
+  geom_smooth(method='lm',color='red')
 ```
 ```{r}
 ggplot(aes(x=density,y=alcohol),data=wine_data) +
-  geom_point()
+  geom_point() +
+  geom_smooth(method='lm',color='red')
 ```
 ```{r}
 ggplot(aes(x=fixed.acidity,y=volatile.acidity),data=wine_data) +
-  geom_point()
+  geom_point() +
+  geom_smooth(method='lm',color='red')
 ```
 
 ```{r}
-ggplot(aes(x=residual.sugar,y=fixed.acidity),data=wine_data) +
-  geom_point()
+ggplot(aes(x=residual.sugar,y=volatile.acidity),data=wine_data) +
+  geom_point() +
+  geom_smooth(method='lm',color='red')
 ```
 ```{r}
 ggplot(aes(x=fixed.acidity,y= volatile.acidity),data=wine_data) +
-  geom_line(stat='summary',fun.y='mean')
+  geom_point(stat='summary',fun.y='mean') +
+  geom_smooth(method='lm',color='red')
 ```
 
 ```{r}
-ggplot(aes(x=quality,y=fixed.acidity),data=wine_data) +
+ggplot(aes(x=quality,y=citric.acid),data=wine_data) +
   geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
