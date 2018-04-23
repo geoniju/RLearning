@@ -44,10 +44,6 @@ wine_data <- read.csv('wineQualityReds.csv')
 > This report explores dataset containing 1599 red wines with their 11 chemical properties
 and rating for the quality of wine
 
-> **Tip**: Before you create any plots, it is a good idea to provide a short
-introduction into the dataset that you are planning to explore. Replace this
-quoted text with that general information!
-
 # Univariate Plots Section
 
 > **Tip**: In this section, you should perform some preliminary exploration of
@@ -63,185 +59,205 @@ summary(wine_data)
 str(wine_data)
 
 wine_data$quality <- factor(wine_data$quality,ordered=T)
-wine_data$quality_rating <- ordered(ifelse(wine_data$quality<5,'bad',ifelse(wine_data$quality<8,'average','good')))
+
+```
+
+```{r echo=FALSE, Univariate_Plots}
 
 
 range(wine_data$fixed.acidity)
-ggplot(aes(x=fixed.acidity),data=wine_data) +
-  geom_histogram(binwidth=.5,color='black',fill='red') +
+grid.arrange(ggplot(aes(x=fixed.acidity),data=wine_data) +
+  geom_histogram(binwidth=.5,color='black',fill='firebrick') +
   geom_freqpoly(binwidth=.5,color='black') +
-  scale_x_continuous(breaks=seq(4.5,16,1)) 
+  scale_x_continuous(breaks=seq(4.5,16,1)), 
 
 
 ggplot(aes(x=1,y=fixed.acidity),data=wine_data) +
-    geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+    geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
   stat_summary(fun.y="mean", geom = "point", shape=23, size =3, fill="pink") +
-  scale_y_continuous(breaks=seq(0,18,.5)) 
-  #coord_cartesian(c(3.4,3.6))
+  scale_y_continuous(breaks=seq(0,18,.5))) 
+
 
 summary(wine_data$fixed.acidity)
 
+```
 
+```{r echo=FALSE, Univariate_Plots}
 range(wine_data$volatile.acidity)
 
-ggplot(aes(x=volatile.acidity),data=wine_data) +
-  geom_histogram(binwidth=.05,color='black',fill='red') +
-  #geom_vline(xintercept=mode(wine_data$volatile.acidity),color='blue') +
+grid.arrange(ggplot(aes(x=volatile.acidity),data=wine_data) +
+  geom_histogram(binwidth=.05,color='black',fill='firebrick') +
   geom_freqpoly(binwidth=.05,color='black') +
-  scale_x_continuous(breaks=seq(0.12,1.58,.1)) 
-
-
+  scale_x_continuous(breaks=seq(0.12,1.58,.1)), 
 ggplot(aes(x=1,y=volatile.acidity),data=wine_data) +
-    geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+    geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
   stat_summary(fun.y="mean", geom = "point", shape=23, size =3, fill="pink") +
-  scale_y_continuous(breaks=seq(0,2,.1))  
-  #coord_cartesian(c(3.4,3.6))
+  scale_y_continuous(breaks=seq(0,2,.1)))  
+
 
 
 summary(wine_data$volatile.acidity)
+```
 
+```{r echo=FALSE, Univariate_Plots}
 range(wine_data$citric.acid)
 str(wine_data$citric.acid)
-ggplot(aes(x=citric.acid),data=wine_data) +
-  geom_histogram(binwidth=.05,color='black',fill='red') +
-  #geom_vline(xintercept=mode(wine_data$volatile.acidity),color='blue') +
+grid.arrange(ggplot(aes(x=citric.acid),data=wine_data) +
+  geom_histogram(binwidth=.05,color='black',fill='firebrick') +
   geom_freqpoly(binwidth=.05,color='black') +
-  scale_x_continuous(breaks=seq(0,1,.1)) 
+  scale_x_continuous(breaks=seq(0,1,.1)), 
 
 
 ggplot(aes(x=1,y=citric.acid),data=wine_data) +
-    geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+    geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
   stat_summary(fun.y="mean", geom = "point", shape=23, size =3, fill="pink") +
-  scale_y_continuous(breaks=seq(0,1,.05))
+  scale_y_continuous(breaks=seq(0,1,.05)))
 
 summary(wine_data$citric.acid)
+```
 
+```{r echo=FALSE, Univariate_Plots}
 range(wine_data$residual.sugar)
-ggplot(aes(x=residual.sugar),data=wine_data) +
-  geom_histogram(binwidth=.2,color='black',fill='red') +
+grid.arrange(ggplot(aes(x=residual.sugar),data=wine_data) +
+  geom_histogram(binwidth=.2,color='black',fill='firebrick') +
   geom_freqpoly(binwidth=.2,color='black') +
-  scale_x_continuous(breaks=seq(0.5,16,.5),limits=c(0.5,7))
+  scale_x_continuous(breaks=seq(0.5,16,.5),limits=c(0.5,7)),
   
 ggplot(aes(x=1,y=residual.sugar),data=wine_data) +
-  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
   stat_summary(fun.y="mean",geom="point",shape=23,size=3,fill="pink") +
   scale_y_continuous(breaks=seq(0.5,16,.5)) +
-  coord_cartesian(ylim=c(0.5,7))
+  coord_cartesian(ylim=c(0.5,7)))
 
 summary(wine_data$residual.sugar)
 
+```
 
+```{r echo=FALSE, Univariate_Plots}
 range(wine_data$chlorides)
-ggplot(aes(x=chlorides),data=wine_data) +
-  geom_histogram(binwidth=0.01,color='black',fill='red') +
+grid.arrange(ggplot(aes(x=chlorides),data=wine_data) +
+  geom_histogram(binwidth=0.01,color='black',fill='firebrick') +
   geom_freqpoly(binwidth=0.01,color='black') +
-  scale_x_continuous(breaks=seq(0.01,0.65,0.02),limits=c(0,0.2))
+  scale_x_continuous(breaks=seq(0.01,0.65,0.02),limits=c(0,0.2)),
 
 ggplot(aes(x=1,y=chlorides),data=wine_data) +
-  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
   scale_y_continuous(breaks=seq(0.01,0.65,0.02)) +
-  coord_cartesian(ylim=c(0,0.2))
+  coord_cartesian(ylim=c(0,0.2)))
 
 summary(wine_data$chlorides)
+```
 
+```{r echo=FALSE, Univariate_Plots}
 
 range(wine_data$free.sulfur.dioxide)
-ggplot(aes(x=free.sulfur.dioxide),data=wine_data) +
-  geom_histogram(binwidth=5,color='black',fill='red') +
+grid.arrange(ggplot(aes(x=free.sulfur.dioxide),data=wine_data) +
+  geom_histogram(binwidth=5,color='black',fill='firebrick') +
   geom_freqpoly(binwidth=5,color='black') +
-  scale_x_continuous(breaks=seq(0,72,5))
+  scale_x_continuous(breaks=seq(0,72,5)),
 
 ggplot(aes(x=1,y=free.sulfur.dioxide),data=wine_data) +
-  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
-  scale_y_continuous(breaks=seq(0,72,5))
+  scale_y_continuous(breaks=seq(0,72,5)))
 
 summary(wine_data$free.sulfur.dioxide)
+```
 
+```{r echo=FALSE, Univariate_Plots}
 range(wine_data$total.sulfur.dioxide)
 
 
-ggplot(aes(x=total.sulfur.dioxide),data=wine_data) +
-  geom_histogram(binwidth=10,color='black',fill='red') +
+grid.arrange(ggplot(aes(x=total.sulfur.dioxide),data=wine_data) +
+  geom_histogram(binwidth=10,color='black',fill='firebrick') +
   geom_freqpoly(binwidth=10,color='black') +
-  scale_x_continuous(breaks=seq(5,175,10),limits=c(5,175))
+  scale_x_continuous(breaks=seq(5,175,10),limits=c(5,175)),
 
 ggplot(aes(x=1,y=total.sulfur.dioxide),data=wine_data) +
-  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
   scale_y_continuous(breaks=seq(5,175,10)) +
-  coord_cartesian(ylim=c(5,175))
+  coord_cartesian(ylim=c(5,175)))
 
 summary(wine_data$total.sulfur.dioxide)
+```
 
-ggplot(aes(x=total.sulfur.dioxide),data=wine_data) +
-
+```{r echo=FALSE, Univariate_Plots}
 
 range(wine_data$density)
 
-ggplot(aes(x=density),data=wine_data)  +
-  geom_histogram(binwidth=0.001,color='black',fill='red') +
-  geom_freqpoly(binwidth=0.001,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(0.9,1.01,0.0015))
+grid.arrange(ggplot(aes(x=density),data=wine_data)  +
+  geom_histogram(binwidth=0.001,color='black',fill='firebrick') +
+  geom_freqpoly(binwidth=0.001,color='black') +
+  scale_x_continuous(breaks=seq(0.9,1.01,0.0015)),
   
 ggplot(aes(x=1,y=density),data=wine_data) +
-  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
-  scale_y_continuous(breaks=(seq(0.9,1.01,0.0015))) 
+  scale_y_continuous(breaks=(seq(0.9,1.01,0.0015)))) 
 
 summary(wine_data$density)
+```
 
+```{r echo=FALSE, Univariate_Plots}
 range(wine_data$pH)
 
-ggplot(aes(x=pH),data=wine_data) +
-  geom_histogram(binwidth=.1,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(2,4.1,.1)) 
+grid.arrange(ggplot(aes(x=pH),data=wine_data) +
+  geom_histogram(binwidth=.1,color='black',fill='firebrick') +
+  geom_freqpoly(binwidth=.1,color='black')+
+  scale_x_continuous(breaks=seq(2,4.1,.1)), 
   
 ggplot(aes(x=1,y=pH),data=wine_data) +
-  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
-  scale_y_continuous(breaks=seq(2,4.1,.1))
+  scale_y_continuous(breaks=seq(2,4.1,.1)))
   
 summary(wine_data$pH)
+```
 
+```{r echo=FALSE, Univariate_Plots}
 range(wine_data$sulphates)
-ggplot(aes(x=sulphates),data=wine_data) +
-  geom_histogram(binwidth=.05,color='black',fill='red') +
-  geom_freqpoly(binwidth=.05,color='black',fill='red') +
-  scale_x_continuous(breaks=seq(0,2,.1),limits=c(0.2,1.4)) 
+grid.arrange(ggplot(aes(x=sulphates),data=wine_data) +
+  geom_histogram(binwidth=.05,color='black',fill='firebrick') +
+  geom_freqpoly(binwidth=.05,color='black') +
+  scale_x_continuous(breaks=seq(0,2,.1),limits=c(0.2,1.4)), 
 
 ggplot(aes(x=1,y=sulphates),data=wine_data) +
-  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,,color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
   scale_y_continuous(breaks=seq(0,2,.1)) +
-  coord_cartesian(ylim=c(0.2,1.4))
+  coord_cartesian(ylim=c(0.2,1.4)))
 
 summary(wine_data$sulphates)
 
+```
 
+```{r echo=FALSE, Univariate_Plots}
 range(wine_data$alcohol)
 
 grid.arrange(
 ggplot(aes(x=alcohol),data=wine_data) +
-  geom_histogram(binwidth=.5,color='black',fill='red') +
+  geom_histogram(binwidth=.5,color='black',fill='firebrick') +
   geom_freqpoly(binwidth=.5,color='black') +
   scale_x_continuous(breaks=seq(8,14,.5),limits=c(8,14)), 
   
 ggplot(aes(x=1,y=alcohol),data=wine_data) +
-  geom_boxplot(outlier.size=1,outlier.color='black',color='black',fill='red') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
   scale_y_continuous(breaks=seq(8,14,.5)) +
   coord_cartesian(ylim=c(8,14)))
 
 
 summary(wine_data$alcohol)
+```
 
-ggplot(aes(x=quality_rating),data=wine_data) +
-  geom_bar(color='black',fill='red')
+```{r echo=FALSE, Univariate_Plots}
+ggplot(aes(x=quality),data=wine_data) +
+  geom_bar(color='black',fill='firebrick')
+
 
 str(wine_data$quality)
-summary(wine_data$quality_rating)
 
 ```
 
@@ -286,7 +302,8 @@ cor(wine_data)
 c <- cor(wine_data[c(1,1:13)])
 #symnum(c,abbr.colnames=FALSE)
 
-#install.packages("corrplot")
+install.packages("corrplot")
+#library(corrplot)
 corrplot(c, type = "lower", order = "hclust", 
          tl.col = "black", tl.srt = 45)
 
@@ -340,14 +357,17 @@ ggplot(aes(x=fixed.acidity,y=volatile.acidity),data=wine_data) +
 ```
 
 ```{r}
-ggplot(aes(x=residual.sugar,y=alcohol),data=wine_data) +
+ggplot(aes(x=residual.sugar,y=fixed.acidity),data=wine_data) +
   geom_point()
 ```
-
+```{r}
+ggplot(aes(x=fixed.acidity,y= volatile.acidity),data=wine_data) +
+  geom_line(stat='summary',fun.y='mean')
+```
 
 ```{r}
 ggplot(aes(x=quality,y=fixed.acidity),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq())
@@ -355,7 +375,7 @@ ggplot(aes(x=quality,y=fixed.acidity),data=wine_data) +
 
 ```{r}
 ggplot(aes(x=quality,y=density),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq())
@@ -363,14 +383,14 @@ ggplot(aes(x=quality,y=density),data=wine_data) +
 
 ```{r}
 ggplot(aes(x=quality,y=volatile.acidity),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq())
 ```
 ```{r}
 ggplot(aes(x=quality,y=chlorides),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq()) +
@@ -380,7 +400,7 @@ range(wine_data$chlorides)
 ```
 ```{r}
 ggplot(aes(x=quality,y=sulphates),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq()) +
@@ -389,7 +409,7 @@ ggplot(aes(x=quality,y=sulphates),data=wine_data) +
   
 ```{r}
 ggplot(aes(x=quality,y=residual.sugar),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq()) +
