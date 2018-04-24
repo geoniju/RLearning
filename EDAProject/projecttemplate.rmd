@@ -224,7 +224,7 @@ grid.arrange(ggplot(aes(x=sulphates),data=wine_data) +
   scale_x_continuous(breaks=seq(0,2,.1),limits=c(0.2,1.4)), 
 
 ggplot(aes(x=1,y=sulphates),data=wine_data) +
-  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,,color='black',fill='firebrick') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
   scale_y_continuous(breaks=seq(0,2,.1)) +
   coord_cartesian(ylim=c(0.2,1.4)))
@@ -302,7 +302,7 @@ cor(wine_data)
 c <- cor(wine_data[c(1,1:13)])
 #symnum(c,abbr.colnames=FALSE)
 
-install.packages("corrplot")
+#install.packages("devtools")
 #library(corrplot)
 corrplot(c, type = "lower", order = "hclust", 
          tl.col = "black", tl.srt = 45)
@@ -310,26 +310,81 @@ corrplot(c, type = "lower", order = "hclust",
 ```
 From the above correlation plot below are the findings:
 
-Fixed acidity is positively correlated with density. This could be because with increase in the mass of the wine the acidic content also increase.
+Fixed acidity is positively correlated with density. This could be because with increase in the mass of the wine the acidic content also increase. 
 
-Citric acid is positively correlated with fixed acidity. Since citric acid is part of fixed acidity content this is also true.
+Citric acid is positively correlated with fixed acidity. Since citric acid is part of fixed acidity content this is expected.
 
-Alcohol is negatively correlated with density. With increase in percentage of alcohol the mass of the wine will definitely decrease.
+Also we can see that alcohol percentage is negatively correlated with density. But both fixed acidity and alcohol show positive correlation with the quality of the wine. This needs to be studied more to understand what really affects the wine quality.
 
 Volatile acidity is negatively correlated with citric acid and quality. With higher amount of volatile acid the quality gets affected. 
 
-Quality is positively correlated with alcohol. With increase in alcohol the quality of the wine gets better although there could be other reasons or lurking variables for the increase in the quality with increase in alcohol.
-
 pH is negatively correlated with fixed acidity and citric acid. pH always decreases with increase in the acidic content.
+
+Residual sugar and density show positive correlation as well.
+
+
 
 
 Let's visualize the above findings through plots to get a better intuition.
 
 
+
+
+```{r}
+ggplot(aes(x=fixed.acidity,y=citric.acid),data=wine_data) +
+  geom_point() +
+  geom_smooth(method='lm',color='red')
+
+```
+
+```{r}
+ggplot(aes(x=density,y=fixed.acidity),data=wine_data) +
+  geom_point() +
+  geom_smooth(method='lm',color='red')
+```
+
+```{r}
+ggplot(aes(x=density,y=alcohol),data=wine_data) +
+  geom_point() +
+  geom_smooth(method='lm',color='red')
+```
+
+```{r}
+ggplot(aes(x=fixed.acidity,y=volatile.acidity),data=wine_data) +
+  geom_point() +
+  geom_smooth(method='lm',color='red')
+```
+
+```{r}
+ggplot(aes(x=density,y=residual.sugar),data=wine_data) +
+  geom_point() +
+  geom_smooth(method='lm',color='red')
+```
+
+```{r}
+ggplot(aes(x=fixed.acidity,y= volatile.acidity),data=wine_data) +
+  geom_point() +
+  geom_smooth(method='lm',color='red')
+```
+
+```{r}
+ggplot(aes(x=density,y= volatile.acidity),data=wine_data) +
+  geom_point() +
+  geom_smooth(method='lm',color='red')
+```
+
+```{r}
+ggplot(aes(x=fixed.acidity,y= pH),data=wine_data) +
+  geom_point() +
+  geom_smooth(method='lm',color='red')
+```
+
+
+
 ```{r}
 
 ggplot(aes(x=quality,y=alcohol),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='red')+
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq(8,15,.5))
@@ -340,43 +395,12 @@ range(wine_data$alcohol)
 From the above plot we can see that higher alcohol content is associated with good quality rating and the mean of the alcohol percentage increases with increase in the quality. 
 
 ```{r}
-ggplot(aes(x=fixed.acidity,y=citric.acid),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
-```
-```{r}
-ggplot(aes(x=fixed.acidity,y=density),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
-```
-```{r}
-ggplot(aes(x=density,y=alcohol),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
-```
-```{r}
-ggplot(aes(x=fixed.acidity,y=volatile.acidity),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
-```
-
-```{r}
-ggplot(aes(x=residual.sugar,y=volatile.acidity),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
-```
-```{r}
-ggplot(aes(x=fixed.acidity,y= volatile.acidity),data=wine_data) +
-  geom_point(stat='summary',fun.y='mean') +
-  geom_smooth(method='lm',color='red')
-```
-
-```{r}
 ggplot(aes(x=quality,y=citric.acid),data=wine_data) +
   geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq())
+
 ```
 
 ```{r}
@@ -394,6 +418,8 @@ ggplot(aes(x=quality,y=volatile.acidity),data=wine_data) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq())
 ```
+
+
 ```{r}
 ggplot(aes(x=quality,y=chlorides),data=wine_data) +
   geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
@@ -404,6 +430,8 @@ ggplot(aes(x=quality,y=chlorides),data=wine_data) +
 
 range(wine_data$chlorides)
 ```
+
+
 ```{r}
 ggplot(aes(x=quality,y=sulphates),data=wine_data) +
   geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
@@ -411,7 +439,7 @@ ggplot(aes(x=quality,y=sulphates),data=wine_data) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq()) +
   coord_cartesian(ylim=c())
-  ```
+```
   
 ```{r}
 ggplot(aes(x=quality,y=residual.sugar),data=wine_data) +
@@ -420,8 +448,23 @@ ggplot(aes(x=quality,y=residual.sugar),data=wine_data) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq()) +
   coord_cartesian(ylim=c(.9,8))
-  ```
+
 range(wine_data$residual.sugar)
+
+```
+
+```{r}
+ggplot(aes(x=quality,y=free.sulfur.dioxide),data=wine_data) +
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
+  geom_jitter(alpha=.5) +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
+  scale_y_continuous(breaks=seq()) +
+  coord_cartesian(ylim=c())
+
+range(wine_data$free.sulfur.dioxide)
+
+```
+
 
 
 
@@ -451,7 +494,73 @@ will do that.
 
 ```{r echo=FALSE, Multivariate_Plots}
 
+ggplot(aes(x=alcohol,y=density,color=quality_rating),data=wine_data) +
+    #geom_point(stat='summary',fun.y='mean') +
+  geom_line(stat='summary',fun.y='mean') 
+  #geom_smooth(method='lm',se=FALSE,color='red')
+
 ```
+
+```{r echo=FALSE, Multivariate_Plots}
+
+ggplot(aes(x=citric.acid,y=density,color=quality_rating),data=wine_data) +
+  geom_point(stat='summary',fun.y='mean') +
+  geom_line(stat='summary',fun.y='mean') 
+  #geom_smooth(method='lm',se=FALSE,color='red')
+
+```
+
+```{r echo=FALSE, Multivariate_Plots}
+
+ggplot(aes(x=fixed.acidity,y=alcohol,color=quality_rating),data=wine_data) +
+    #geom_point(stat='summary',fun.y='mean') +
+  geom_line(stat='summary',fun.y='mean') 
+  geom_smooth(method='lm',se=FALSE,color='red') 
+  #geom_raster(aes(), hjust=0.5,vjust=0.5, interpolate=FALSE)
+
+```
+
+```{r echo=FALSE, Multivariate_Plots}
+
+ggplot(aes(x=citric.acid,y=alcohol,color=quality_rating),data=wine_data) +
+    #geom_point(stat='summary',fun.y='mean') +
+  geom_line(stat='summary',fun.y='mean') 
+  geom_smooth(method='lm',se=FALSE,color='red') 
+  #geom_raster(aes(), hjust=0.5,vjust=0.5, interpolate=FALSE)
+
+```
+
+```{r echo=FALSE, Multivariate_Plots}
+
+  ggplot(aes(x=alcohol,y=citric.acid,color=quality_rating),data=wine_data) +
+  #geom_point(stat='summary',fun.y='mean') +
+  geom_line(stat='summary',fun.y='mean')
+  #geom_smooth(method='lm',se=FALSE,color='red') 
+  #geom_raster(aes(), hjust=0.5,vjust=0.5, interpolate=FALSE)
+
+```
+
+```{r echo=FALSE, Multivariate_Plots}
+
+  ggplot(aes(x=alcohol,y=residual.sugar,color=quality_rating),data=wine_data) +
+  #geom_point(stat='summary',fun.y='mean') +
+  geom_line(stat='summary',fun.y='mean')
+  #geom_smooth(method='lm',se=FALSE,color='red') 
+  #geom_raster(aes(), hjust=0.5,vjust=0.5, interpolate=FALSE)
+
+```
+
+
+```{r echo=FALSE, Multivariate_Plots}
+
+  ggplot(aes(x=alcohol,y=density,color=quality_rating),data=wine_data) +
+  #geom_point(stat='summary',fun.y='mean') +
+  geom_line(stat='summary',fun.y='mean')
+  #geom_smooth(method='lm',se=FALSE,color='red') 
+  #geom_raster(aes(), hjust=0.5,vjust=0.5, interpolate=FALSE)
+
+```
+
 
 # Multivariate Analysis
 
