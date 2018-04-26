@@ -62,8 +62,11 @@ wine_data$quality <- factor(wine_data$quality,ordered=T)
 
 ```
 
-```{r echo=FALSE, Univariate_Plots}
+Best way to plot the distribution of quantitative variables is through hitogram. Box plot helps us to visualize the outliers present if any and shows us where 50 percent of our values lie.
 
+
+Fixed acidity
+```{r echo=FALSE, Univariate_Plots}
 
 range(wine_data$fixed.acidity)
 grid.arrange(ggplot(aes(x=fixed.acidity),data=wine_data) +
@@ -82,6 +85,8 @@ summary(wine_data$fixed.acidity)
 
 ```
 
+From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+
 ```{r echo=FALSE, Univariate_Plots}
 range(wine_data$volatile.acidity)
 
@@ -98,6 +103,7 @@ ggplot(aes(x=1,y=volatile.acidity),data=wine_data) +
 
 summary(wine_data$volatile.acidity)
 ```
+From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between .39 and .64. Here the mean and the median are both almost same with mean little high. 
 
 ```{r echo=FALSE, Univariate_Plots}
 range(wine_data$citric.acid)
@@ -116,6 +122,8 @@ ggplot(aes(x=1,y=citric.acid),data=wine_data) +
 summary(wine_data$citric.acid)
 ```
 
+From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+
 ```{r echo=FALSE, Univariate_Plots}
 range(wine_data$residual.sugar)
 grid.arrange(ggplot(aes(x=residual.sugar),data=wine_data) +
@@ -133,6 +141,8 @@ summary(wine_data$residual.sugar)
 
 ```
 
+From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+
 ```{r echo=FALSE, Univariate_Plots}
 range(wine_data$chlorides)
 grid.arrange(ggplot(aes(x=chlorides),data=wine_data) +
@@ -149,6 +159,8 @@ ggplot(aes(x=1,y=chlorides),data=wine_data) +
 summary(wine_data$chlorides)
 ```
 
+From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+
 ```{r echo=FALSE, Univariate_Plots}
 
 range(wine_data$free.sulfur.dioxide)
@@ -164,6 +176,7 @@ ggplot(aes(x=1,y=free.sulfur.dioxide),data=wine_data) +
 
 summary(wine_data$free.sulfur.dioxide)
 ```
+ From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
 
 ```{r echo=FALSE, Univariate_Plots}
 range(wine_data$total.sulfur.dioxide)
@@ -182,6 +195,7 @@ ggplot(aes(x=1,y=total.sulfur.dioxide),data=wine_data) +
 
 summary(wine_data$total.sulfur.dioxide)
 ```
+ From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
 
 ```{r echo=FALSE, Univariate_Plots}
 
@@ -200,6 +214,8 @@ ggplot(aes(x=1,y=density),data=wine_data) +
 summary(wine_data$density)
 ```
 
+From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+
 ```{r echo=FALSE, Univariate_Plots}
 range(wine_data$pH)
 
@@ -215,6 +231,8 @@ ggplot(aes(x=1,y=pH),data=wine_data) +
   
 summary(wine_data$pH)
 ```
+
+From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
 
 ```{r echo=FALSE, Univariate_Plots}
 range(wine_data$sulphates)
@@ -232,6 +250,8 @@ ggplot(aes(x=1,y=sulphates),data=wine_data) +
 summary(wine_data$sulphates)
 
 ```
+
+From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
 
 ```{r echo=FALSE, Univariate_Plots}
 range(wine_data$alcohol)
@@ -251,6 +271,8 @@ ggplot(aes(x=1,y=alcohol),data=wine_data) +
 
 summary(wine_data$alcohol)
 ```
+
+From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
 
 ```{r echo=FALSE, Univariate_Plots}
 ggplot(aes(x=quality),data=wine_data) +
@@ -597,7 +619,6 @@ make sure you justify why you chose each plot by describing what it shows.
 ```{r echo=FALSE, Plot_Two}
 
 ```
-
 ### Description Two
 
 
