@@ -3,30 +3,11 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
-TITLE by YOUR_NAME_HERE
+Red Wine Data Exploration by GEO
 ========================================================
 
-> **Tip**: You will see quoted sections like this throughout the template to
-help you construct your report. Make sure that you remove these notes before
-you finish and submit your project!
-
-> **Tip**: One of the requirements of this project is that your code follows
-good formatting techniques, including limiting your lines to 80 characters or
-less. If you're using RStudio, go into Preferences \> Code \> Display to set up
-a margin line to help you keep track of this guideline!
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
-# Load all of the packages that you end up using in your analysis in this code
-# chunk.
-
-# Notice that the parameter "echo" was set to FALSE for this code chunk. This
-# prevents the code from displaying in the knitted HTML output. You should set
-# echo=FALSE for all code chunks in your file, unless it makes sense for your
-# report to show the code that generated a particular plot.
-
-# The other parameters for "message" and "warning" should also be set to FALSE
-# for other code chunks once you have verified that each plot comes out as you
-# want it to. This will clean up the flow of your report.
 
 library(ggplot2)
 library(gridExtra)
@@ -41,24 +22,25 @@ wine_data <- read.csv('wineQualityReds.csv')
 
 ```
 
-> This report explores dataset containing 1599 red wines with their 11 chemical properties
-and rating for the quality of wine
+This report explores dataset containing 1599 red wines with their 11 chemical propertiesand rating for the quality of wine
 
 # Univariate Plots Section
 
-> **Tip**: In this section, you should perform some preliminary exploration of
-your dataset. Run some summaries of the data and create univariate plots to
-understand the structure of the individual variables in your dataset. Don't
-forget to add a comment after each plot or closely-related group of plots!
-There should be multiple code chunks and text sections; the first one below is
-just to help you get started.
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 names(wine_data)
 summary(wine_data)
 str(wine_data)
 
-wine_data$quality <- factor(wine_data$quality,ordered=T)
+
+wine_data$quality <- factor(wine_data$quality, ordered = T)
+
+
+wine_data$quality_rating <- ifelse(wine_data$quality < 5, 'bad', ifelse(
+  wine_data$quality < 8, 'average', 'good'))
+
+wine_data$quality_rating <- ordered(wine_data$quality_rating,
+                       levels = c('bad', 'average', 'good'))
 
 ```
 
@@ -66,7 +48,7 @@ Best way to plot the distribution of quantitative variables is through hitogram.
 
 
 Fixed acidity
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 
 range(wine_data$fixed.acidity)
 grid.arrange(ggplot(aes(x=fixed.acidity),data=wine_data) +
@@ -85,9 +67,9 @@ summary(wine_data$fixed.acidity)
 
 ```
 
-From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+From the above plot we can see that the distribution is positively skewed. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 range(wine_data$volatile.acidity)
 
 grid.arrange(ggplot(aes(x=volatile.acidity),data=wine_data) +
@@ -103,9 +85,9 @@ ggplot(aes(x=1,y=volatile.acidity),data=wine_data) +
 
 summary(wine_data$volatile.acidity)
 ```
-From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between .39 and .64. Here the mean and the median are both almost same with mean little high. 
+The above distribution looks like bimodal distribution. Boxplot shows that 50 percent of the values are between .39 and .64. Here the mean and the median are both almost same with mean little high. 
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 range(wine_data$citric.acid)
 str(wine_data$citric.acid)
 grid.arrange(ggplot(aes(x=citric.acid),data=wine_data) +
@@ -122,9 +104,9 @@ ggplot(aes(x=1,y=citric.acid),data=wine_data) +
 summary(wine_data$citric.acid)
 ```
 
-From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+From the above plot we can see that the histogram does not follow a normal distribution. Values are almost equally spread out between 0 and 0.5. Boxplot shows that 50 percent of the values around median are between 0.090 and 0.420. The mean 0.271 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 range(wine_data$residual.sugar)
 grid.arrange(ggplot(aes(x=residual.sugar),data=wine_data) +
   geom_histogram(binwidth=.2,color='black',fill='firebrick') +
@@ -141,9 +123,9 @@ summary(wine_data$residual.sugar)
 
 ```
 
-From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+From the above plot we can see that the histogram is skewed to the right with many outliers. Boxplot shows that 50 percent of the values around the median are between 1.90 and 2.60 The mean 2.539 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 range(wine_data$chlorides)
 grid.arrange(ggplot(aes(x=chlorides),data=wine_data) +
   geom_histogram(binwidth=0.01,color='black',fill='firebrick') +
@@ -159,14 +141,14 @@ ggplot(aes(x=1,y=chlorides),data=wine_data) +
 summary(wine_data$chlorides)
 ```
 
-From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+Here too the histogram is skewed to the right with outlier which is removed in this plot. Boxplot shows that 50 percent of the values are between 0.07 and 0.09 The mean 0.087 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 
 range(wine_data$free.sulfur.dioxide)
 grid.arrange(ggplot(aes(x=free.sulfur.dioxide),data=wine_data) +
-  geom_histogram(binwidth=5,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=5,color='black') +
+  geom_histogram(binwidth=2,color='black',fill='firebrick') +
+  geom_freqpoly(binwidth=2,color='black') +
   scale_x_continuous(breaks=seq(0,72,5)),
 
 ggplot(aes(x=1,y=free.sulfur.dioxide),data=wine_data) +
@@ -176,15 +158,15 @@ ggplot(aes(x=1,y=free.sulfur.dioxide),data=wine_data) +
 
 summary(wine_data$free.sulfur.dioxide)
 ```
- From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+ From the above plot we can see that the histogram is positively skewed with many outliers. Boxplot shows that 50 percent of the values are between 7 and 21. The mean 15.87 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 range(wine_data$total.sulfur.dioxide)
 
 
 grid.arrange(ggplot(aes(x=total.sulfur.dioxide),data=wine_data) +
-  geom_histogram(binwidth=10,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=10,color='black') +
+  geom_histogram(binwidth=5,color='black',fill='firebrick') +
+  geom_freqpoly(binwidth=5,color='black') +
   scale_x_continuous(breaks=seq(5,175,10),limits=c(5,175)),
 
 ggplot(aes(x=1,y=total.sulfur.dioxide),data=wine_data) +
@@ -195,9 +177,9 @@ ggplot(aes(x=1,y=total.sulfur.dioxide),data=wine_data) +
 
 summary(wine_data$total.sulfur.dioxide)
 ```
- From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+ From the above plot we can see that the histogram is positively skewed with outliers. Boxplot shows that 50 percent of the values around the median are between 22 and 62. The mean 46.47 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 
 range(wine_data$density)
 
@@ -214,9 +196,11 @@ ggplot(aes(x=1,y=density),data=wine_data) +
 summary(wine_data$density)
 ```
 
-From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+From the above plot we can see that the histogram is almost symmetric and follows a normal distribution. Boxplot shows that 50 percent of the values around the median are between 0.9956 and 0.9978 In this case the mean and the median are almost equal as the distribution is symmetric.
 
-```{r echo=FALSE, Univariate_Plots}
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 range(wine_data$pH)
 
 grid.arrange(ggplot(aes(x=pH),data=wine_data) +
@@ -232,9 +216,9 @@ ggplot(aes(x=1,y=pH),data=wine_data) +
 summary(wine_data$pH)
 ```
 
-From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+The above distribution is also almost symmetric. Boxplot shows that 50 percent of the values around the median are between 3.210 and 3.4. The mean and the median are almost equal as the distribution is symmetric.
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 range(wine_data$sulphates)
 grid.arrange(ggplot(aes(x=sulphates),data=wine_data) +
   geom_histogram(binwidth=.05,color='black',fill='firebrick') +
@@ -251,9 +235,9 @@ summary(wine_data$sulphates)
 
 ```
 
-From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+The above distribution is right skewed with some outliers. Boxplot shows that 50 percent of the values around the median are between 0.55 and 0.73. The mean 0.6581 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 range(wine_data$alcohol)
 
 grid.arrange(
@@ -272,60 +256,34 @@ ggplot(aes(x=1,y=alcohol),data=wine_data) +
 summary(wine_data$alcohol)
 ```
 
-From the above plot we can see that the histogram follows a normal distribution. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+The distribution of alcohol is also right skewed. Boxplot shows that 50 percent of the values are between 9.5 and 11.10. The mean 10.42 is little more than the median as we can see from the plot due to the outliers. 
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality),data=wine_data) +
   geom_bar(color='black',fill='firebrick')
 
-
-str(wine_data$quality)
-
 ```
 
-> **Tip**: Make sure that you leave a blank line between the start / end of
-each code block and the end / start of your Markdown text so that it is
-formatted nicely in the knitted text. Note as well that text on consecutive
-lines is treated as a single space. Make sure you have a blank line between
-your paragraphs so that they too are formatted for easy readability.
+The above plot shows the distribution of the quality using bar chart.
+
+
 
 # Univariate Analysis
 
-> **Tip**: Now that you've completed your univariate explorations, it's time to
-reflect on and summarize what you've found. Use the questions below to help you
-gather your observations and add your own if you have other thoughts!
 
-### What is the structure of your dataset?
 
-### What is/are the main feature(s) of interest in your dataset?
-
-### What other features in the dataset do you think will help support your \
-investigation into your feature(s) of interest?
-
-### Did you create any new variables from existing variables in the dataset?
-
-### Of the features you investigated, were there any unusual distributions? \
-Did you perform any operations on the data to tidy, adjust, or change the form \
-of the data? If so, why did you do this?
+The dataset has 1599 rows with 11 numerical variables which determine the quality of the wine. The column quality is a categorical variable which is converted to factor. Here quality of wine is the feature of interest for which we need to find which variables affect the quality of the wine. Fiexed acidity should help in increasing the quality of the wine as it adds to the sour taste of wine. Volatile acidity generally degrades the quality of the wine so the effect of volatile acidity on the quality of the wine should be studied. Alcohol might affect the quality of the wine. Many of the distribution is positively skewed due to outliers which were handled by limiting the values in the plot.
 
 
 # Bivariate Plots Section
 
-> **Tip**: Based on what you saw in the univariate plots, what relationships
-between variables might be interesting to look at in this section? Don't limit
-yourself to relationships between a main output feature and one of the
-supporting variables. Try to look at relationships between supporting variables
-as well.
 
-```{r echo=FALSE, Bivariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 wine_data$quality = as.numeric(wine_data$quality)
 str(wine_data)
-cor(wine_data)
+#cor(wine_data)
 c <- cor(wine_data[c(1,1:13)])
-#symnum(c,abbr.colnames=FALSE)
 
-#install.packages("devtools")
-#library(corrplot)
 corrplot(c, type = "lower", order = "hclust", 
          tl.col = "black", tl.srt = 45)
 
@@ -352,58 +310,75 @@ Let's visualize the above findings through plots to get a better intuition.
 
 
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=fixed.acidity,y=citric.acid),data=wine_data) +
   geom_point() +
   geom_smooth(method='lm',color='red')
-
+cor(wine_data$fixed.acidity,wine_data$citric.acid)
 ```
 
-```{r}
+Above scatter plot shows the correlation between fixed acidity and citric acid. 
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=density,y=fixed.acidity),data=wine_data) +
   geom_point() +
   geom_smooth(method='lm',color='red')
+
+cor(wine_data$density,wine_data$fixed.acidity)
 ```
 
-```{r}
+Above scatter plot shows the correlation between density and fixed.acidity which is positively correlated. Increase in density of wine means increase in the quantity of wine which will increase the acidic content as well.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=density,y=alcohol),data=wine_data) +
   geom_point() +
   geom_smooth(method='lm',color='red')
+cor(wine_data$density,wine_data$alcohol)
 ```
 
-```{r}
+Above scatter plot shows the correlation between density and alcohol which is negatively correlated. With increase in the density of the wine the percentage of the alcohol content will decrease.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=fixed.acidity,y=volatile.acidity),data=wine_data) +
   geom_point() +
   geom_smooth(method='lm',color='red')
+cor(wine_data$fixed.acidity,wine_data$volatile.acidity)
 ```
 
-```{r}
+Fixed.acidity seems to be slightly negatively correlated with volatile acidity.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=density,y=residual.sugar),data=wine_data) +
   geom_point() +
   geom_smooth(method='lm',color='red')
+cor(wine_data$density,wine_data$residual.sugar)
 ```
 
-```{r}
-ggplot(aes(x=fixed.acidity,y= volatile.acidity),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
-```
+Density is slightly positively correlated with residual.sugar. This might be because the increase in wine content also increases the amount of residual sugar present in wine.
 
-```{r}
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=density,y= volatile.acidity),data=wine_data) +
   geom_point() +
   geom_smooth(method='lm',color='red')
+cor(wine_data$density,wine_data$volatile.acidity)
 ```
 
-```{r}
+Looks like there is no much correlation between volatile acidity and density.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=fixed.acidity,y= pH),data=wine_data) +
   geom_point() +
   geom_smooth(method='lm',color='red')
+cor(wine_data$fixed.acidity,wine_data$pH)
 ```
 
+Fixed acidity and pH are negatively correlated. This is obvious because with increase in acidity the pH always decreases.
 
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+wine_data$quality <- factor(wine_data$quality,ordered=T)
 
 ggplot(aes(x=quality,y=alcohol),data=wine_data) +
   geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
@@ -416,33 +391,41 @@ range(wine_data$alcohol)
 
 From the above plot we can see that higher alcohol content is associated with good quality rating and the mean of the alcohol percentage increases with increase in the quality. 
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=citric.acid),data=wine_data) +
   geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
-  scale_y_continuous(breaks=seq())
-
+  scale_y_continuous(breaks=seq(0,1,.1)) +
+  coord_cartesian(ylim=c(0,.75))
+range(wine_data$citric.acid)
 ```
 
-```{r}
+From the above plot we can see that the higher citric acid content is associated with higher quality rating. The mean of the citric acid level increases with increase in the quality rating.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=density),data=wine_data) +
   geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
-  scale_y_continuous(breaks=seq())
+  scale_y_continuous(breaks=seq(0.99,1.01,0.001)) 
+range(wine_data$density)
 ```
 
-```{r}
+Density seems to have decreasing effect on quality which might be due to the decrease in alcohol content.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=volatile.acidity),data=wine_data) +
   geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
-  scale_y_continuous(breaks=seq())
+  scale_y_continuous(breaks=seq(.12,1.58,.1))
+range(wine_data$volatile.acidity)
 ```
 
+Volatile acidity definitely has a decreasing effect on the quality of the wine.
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=chlorides),data=wine_data) +
   geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
@@ -453,190 +436,191 @@ ggplot(aes(x=quality,y=chlorides),data=wine_data) +
 range(wine_data$chlorides)
 ```
 
+Chloride too has a negative effect on the quality of the wine.
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=sulphates),data=wine_data) +
   geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
-  scale_y_continuous(breaks=seq()) +
-  coord_cartesian(ylim=c())
+  scale_y_continuous(breaks=seq(0,2,.1)) +
+  coord_cartesian(ylim=c(0,1.6))
+
+
+range(wine_data$sulphates)
 ```
+
+Sulphates has a positive impact on the quality of the wine.
   
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=residual.sugar),data=wine_data) +
   geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
-  scale_y_continuous(breaks=seq()) +
-  coord_cartesian(ylim=c(.9,8))
+  scale_y_continuous(breaks=seq(0,16,.5)) +
+  coord_cartesian(ylim=c(0,6))
 
 range(wine_data$residual.sugar)
 
 ```
 
-```{r}
+Residual sugar does not seem to have any impact on the quality of the wine.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=free.sulfur.dioxide),data=wine_data) +
   geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
-  scale_y_continuous(breaks=seq()) +
-  coord_cartesian(ylim=c())
+  scale_y_continuous(breaks=seq(0,72,5)) +
+  coord_cartesian(ylim=c(0,60))
 
 range(wine_data$free.sulfur.dioxide)
 
 ```
 
-
+Free sulfur too does not seem to have any impact on the quaity of the wine.
 
 
 # Bivariate Analysis
 
-> **Tip**: As before, summarize what you found in your bivariate explorations
-here. Use the questions below to guide your discussion.
+Alcohol has more positive impact on the quality of the wine. Fixed acidity or the citric acid too has positive impact on the quality of the wine. Sulphates has a slight positive impact on the quality of the alcohol.
 
-### Talk about some of the relationships you observed in this part of the \
-investigation. How did the feature(s) of interest vary with other features in \
-the dataset?
+Volatile acidity has more negative impact on the quality of the wine. Chlorides too has some negative impact on the quality of the wine. Density too has slight negative impact which might be due to decrease in alcohol. Though citric acid is positively correlated with density of alcohol both have varying effect on the quality of the alcohol while the former has highly positive effect on the quality the later has slight decreasing effect on the alcohol. 
 
-### Did you observe any interesting relationships between the other features \
-(not the main feature(s) of interest)?
-
-### What was the strongest relationship you found?
+Overall the strongest relationship was between alcohol percentage and the alcohol quality.
 
 
 # Multivariate Plots Section
 
-> **Tip**: Now it's time to put everything together. Based on what you found in
-the bivariate plots section, create a few multivariate plots to investigate
-more complex interactions between variables. Make sure that the plots that you
-create here are justified by the plots you explored in the previous section. If
-you plan on creating any mathematical models, this is the section where you
-will do that.
 
-```{r echo=FALSE, Multivariate_Plots}
 
-ggplot(aes(x=alcohol,y=density,color=quality_rating),data=wine_data) +
-    #geom_point(stat='summary',fun.y='mean') +
-  geom_line(stat='summary',fun.y='mean') 
-  #geom_smooth(method='lm',se=FALSE,color='red')
-
-```
-
-```{r echo=FALSE, Multivariate_Plots}
-
-ggplot(aes(x=citric.acid,y=density,color=quality_rating),data=wine_data) +
-  geom_point(stat='summary',fun.y='mean') +
-  geom_line(stat='summary',fun.y='mean') 
-  #geom_smooth(method='lm',se=FALSE,color='red')
-
-```
-
-```{r echo=FALSE, Multivariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 
 ggplot(aes(x=fixed.acidity,y=alcohol,color=quality_rating),data=wine_data) +
-    #geom_point(stat='summary',fun.y='mean') +
+  geom_point(stat='summary',fun.y='mean') +
   geom_line(stat='summary',fun.y='mean') 
-  geom_smooth(method='lm',se=FALSE,color='red') 
-  #geom_raster(aes(), hjust=0.5,vjust=0.5, interpolate=FALSE)
+
 
 ```
 
-```{r echo=FALSE, Multivariate_Plots}
+From the above plot we can see that the higher fixed acidity content is associated with more average rating than the bad rating thus fixedity acid seems to have some positive impact on the quality of the wine along with alcohol.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 
 ggplot(aes(x=citric.acid,y=alcohol,color=quality_rating),data=wine_data) +
-    #geom_point(stat='summary',fun.y='mean') +
+  geom_point(stat='summary',fun.y='mean') +
   geom_line(stat='summary',fun.y='mean') 
-  geom_smooth(method='lm',se=FALSE,color='red') 
-  #geom_raster(aes(), hjust=0.5,vjust=0.5, interpolate=FALSE)
+
 
 ```
 
-```{r echo=FALSE, Multivariate_Plots}
+From the above plot we can see that the higher citric acid content is associated with more average rating than the bad rating for lower percentage of alcohol thus citric acid seems to have some positive impact on the quality of the wine along with alcohol.
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 
   ggplot(aes(x=alcohol,y=citric.acid,color=quality_rating),data=wine_data) +
-  #geom_point(stat='summary',fun.y='mean') +
-  geom_line(stat='summary',fun.y='mean')
-  #geom_smooth(method='lm',se=FALSE,color='red') 
-  #geom_raster(aes(), hjust=0.5,vjust=0.5, interpolate=FALSE)
+  geom_point(stat='summary',fun.y='mean') +
+  geom_line(stat='summary',fun.y='mean') 
+
 
 ```
 
-```{r echo=FALSE, Multivariate_Plots}
+From the above plot we can see that moderate value of alcohol and higher citric acid is associated with higher quality.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+  ggplot(aes(x=alcohol,y=chlorides,color=quality_rating),data=wine_data) +
+  geom_point(stat='summary',fun.y='mean') +
+  geom_line(stat='summary',fun.y='mean') 
+
+
+```
+
+From the above plot we can see that higer chlorides are associated with bad rating.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+  ggplot(aes(x=alcohol,y=sulphates,color=quality_rating),data=wine_data) +
+  geom_point(stat='summary',fun.y='mean') +
+  geom_line(stat='summary',fun.y='mean') 
+
+
+```
+
+Sulphates seems to have mild positive impact on the quality with higher sulphate levels are associated with higer quality ratings.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 
   ggplot(aes(x=alcohol,y=residual.sugar,color=quality_rating),data=wine_data) +
-  #geom_point(stat='summary',fun.y='mean') +
-  geom_line(stat='summary',fun.y='mean')
-  #geom_smooth(method='lm',se=FALSE,color='red') 
-  #geom_raster(aes(), hjust=0.5,vjust=0.5, interpolate=FALSE)
+  geom_point(stat='summary',fun.y='mean') +
+  geom_line(stat='summary',fun.y='mean') 
+
 
 ```
 
-
-```{r echo=FALSE, Multivariate_Plots}
-
-  ggplot(aes(x=alcohol,y=density,color=quality_rating),data=wine_data) +
-  #geom_point(stat='summary',fun.y='mean') +
-  geom_line(stat='summary',fun.y='mean')
-  #geom_smooth(method='lm',se=FALSE,color='red') 
-  #geom_raster(aes(), hjust=0.5,vjust=0.5, interpolate=FALSE)
-
-```
-
+Residual sugar does not seem to have any effect on the quality of the wine.
 
 # Multivariate Analysis
 
-### Talk about some of the relationships you observed in this part of the \
-investigation. Were there features that strengthened each other in terms of \
-looking at your feature(s) of interest?
 
-### Were there any interesting or surprising interactions between features?
+In the multivariate analysis we found how citric acid contributes to quality along with alcohol content. 
 
-### OPTIONAL: Did you create any models with your dataset? Discuss the \
-strengths and limitations of your model.
+### Were there any interesting or surprising interactions between features? 
+
+Chlorides seems to have negative impact on the quality wherease sulphates seems to have positive impact on the quality of wine. Residual sugar does not affect the quality of the wine.
 
 ------
 
 # Final Plots and Summary
 
-> **Tip**: You've done a lot of exploration and have built up an understanding
-of the structure of and relationships between the variables in your dataset.
-Here, you will select three plots from all of your previous exploration to
-present here as a summary of some of your most interesting findings. Make sure
-that you have refined your selected plots for good titling, axis labels (with
-units), and good aesthetic choices (e.g. color, transparency). After each plot,
-make sure you justify why you chose each plot by describing what it shows.
 
 ### Plot One
-```{r echo=FALSE, Plot_One}
-
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(aes(x=quality,y=alcohol),data=wine_data) +
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
+  geom_jitter(alpha=.5) +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
+  scale_y_continuous(breaks=seq(8,15,.5))
 ```
+
+This plot shows that alcohol affects the quality of wine in a positive way. With increase in the alcohol percentage the quality of the wine is better.
 
 ### Description One
 
 
 ### Plot Two
-```{r echo=FALSE, Plot_Two}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(aes(x=quality,y=citric.acid),data=wine_data) +
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
+  geom_jitter(alpha=.5) +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
+  scale_y_continuous(breaks=seq(0,1,.1)) +
+  coord_cartesian(ylim=c(0,.75))
 
 ```
+
+Citric acid also adds to the quality of wine mostly due to the sour taste it adds to the wine. Citric acid in combination with alcohol are the major factors which determines the quality of the wine.
+
 ### Description Two
 
 
 ### Plot Three
-```{r echo=FALSE, Plot_Three}
-
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(aes(x=quality,y=volatile.acidity),data=wine_data) +
+  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
+  geom_jitter(alpha=.5) +
+  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
+  scale_y_continuous(breaks=seq(.12,1.58,.1))
 ```
 
 ### Description Three
+Volatile acidity degrades the quality of the wine. It spoils the wine taste. Thus lower the volatile acidity content better will be the quality of the wine.
 
 ------
 
 # Reflection
 
-> **Tip**: Here's the final step! Reflect on the exploration you performed and
-the insights you found. What were some of the struggles that you went through?
-What went well? What was surprising? Make sure you include an insight into
-future work that could be done with the dataset.
+By analysing the variables that affect the quality of the wine we are able to get a better insight of how each variable has affected the quality of the wine. Initially it looked like density and alcohol both had positive correlation with quantity. But later on analysis it was clear that it was only alcohol that has positive correlation. Only the citric acid adds to the quality of the wine which is correlated with density of wine. It was challenging to find which variable actually has strong relation with quality. Multivariate plot helped to compare the variables and to determine what affects the quality of wine. Free sulfur dioxide and total sulfur dioxide did not have any effect on the quality of the wine. While sulphates have some positive effect on the quaility of wine chlorides have degrading effect on the quality of wine.
 
-> **Tip**: Don't forget to remove this, and the other **Tip** sections before
-saving your final work and knitting the final report!
