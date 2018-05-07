@@ -44,7 +44,8 @@ wine_data$quality_rating <- ordered(wine_data$quality_rating,
 
 ```
 
-Best way to plot the distribution of quantitative variables is through hitogram. Box plot helps us to visualize the outliers present if any and shows us where 50 percent of our values lie.
+Best way to plot the distribution of quantitative variables is through hitogram.
+Box plot helps us to visualize the outliers present if any and shows us where 50 percent of our values lie.
 
 
 ###Fixed acidity
@@ -54,21 +55,25 @@ Best way to plot the distribution of quantitative variables is through hitogram.
 range(wine_data$fixed.acidity)
 grid.arrange(ggplot(aes(x=fixed.acidity),data=wine_data) +
   geom_histogram(binwidth=.5,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=.5,color='black') +
   scale_x_continuous(breaks=seq(4.5,16,1)), 
 
 
 ggplot(aes(x=1,y=fixed.acidity),data=wine_data) +
-    geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
+    geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,   
+                 color='black',fill='firebrick') +
   stat_summary(fun.y="mean", geom = "point", shape=23, size =3, fill="pink") +
-  scale_y_continuous(breaks=seq(0,18,.5))) 
+  scale_y_continuous(breaks=seq(0,18,1)) +
+  coord_cartesian(ylim=c(5,13)))
 
 
 summary(wine_data$fixed.acidity)
 
 ```
 
-From the above plot we can see that the distribution is positively skewed. Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 8.2 which is marked in the plot in pink is more than the median because of outliers which is also highlighted in blue in the plot. 
+From the above plot we can see that the distribution is positively skewed. 
+Boxplot shows that 50 percent of the values are between 7.1 and 9.2. The mean 
+8.2 which is marked in the plot in pink is more than the median because of 
+outliers which is also highlighted in blue in the plot. 
 
 ###Volatile acidity
 
@@ -77,12 +82,13 @@ range(wine_data$volatile.acidity)
 
 grid.arrange(ggplot(aes(x=volatile.acidity),data=wine_data) +
   geom_histogram(binwidth=.05,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=.05,color='black') +
   scale_x_continuous(breaks=seq(0.12,1.58,.1)), 
 ggplot(aes(x=1,y=volatile.acidity),data=wine_data) +
-    geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
+    geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,
+                 color='black',fill='firebrick') +
   stat_summary(fun.y="mean", geom = "point", shape=23, size =3, fill="pink") +
-  scale_y_continuous(breaks=seq(0,2,.1)))  
+  scale_y_continuous(breaks=seq(0,2,.1)) +
+  coord_cartesian(ylim=c(0.15,1.1)))  
 
 
 
@@ -98,14 +104,15 @@ range(wine_data$citric.acid)
 str(wine_data$citric.acid)
 grid.arrange(ggplot(aes(x=citric.acid),data=wine_data) +
   geom_histogram(binwidth=.05,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=.05,color='black') +
   scale_x_continuous(breaks=seq(0,1,.1)), 
 
 
 ggplot(aes(x=1,y=citric.acid),data=wine_data) +
-    geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
+    geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,
+                 color='black',fill='firebrick') +
   stat_summary(fun.y="mean", geom = "point", shape=23, size =3, fill="pink") +
-  scale_y_continuous(breaks=seq(0,1,.05)))
+  scale_y_continuous(breaks=seq(0,1,.1)) +
+  coord_cartesian(ylim=c(0,1)))
 
 summary(wine_data$citric.acid)
 ```
@@ -118,14 +125,14 @@ From the above plot we can see that the histogram does not follow a normal distr
 range(wine_data$residual.sugar)
 grid.arrange(ggplot(aes(x=residual.sugar),data=wine_data) +
   geom_histogram(binwidth=.2,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=.2,color='black') +
   scale_x_continuous(breaks=seq(0.5,16,.5),limits=c(0.5,7)),
   
 ggplot(aes(x=1,y=residual.sugar),data=wine_data) +
-  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,
+               color='black',fill='firebrick') +
   stat_summary(fun.y="mean",geom="point",shape=23,size=3,fill="pink") +
   scale_y_continuous(breaks=seq(0.5,16,.5)) +
-  coord_cartesian(ylim=c(0.5,7)))
+  coord_cartesian(ylim=c(0.5,4)))
 
 summary(wine_data$residual.sugar)
 
@@ -139,14 +146,14 @@ From the above plot we can see that the histogram is skewed to the right with ma
 range(wine_data$chlorides)
 grid.arrange(ggplot(aes(x=chlorides),data=wine_data) +
   geom_histogram(binwidth=0.01,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=0.01,color='black') +
   scale_x_continuous(breaks=seq(0.01,0.65,0.02),limits=c(0,0.2)),
 
 ggplot(aes(x=1,y=chlorides),data=wine_data) +
-  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,
+               color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
   scale_y_continuous(breaks=seq(0.01,0.65,0.02)) +
-  coord_cartesian(ylim=c(0,0.2)))
+  coord_cartesian(ylim=c(0.01,0.13)))
 
 summary(wine_data$chlorides)
 ```
@@ -160,13 +167,14 @@ Here too the histogram is skewed to the right with outlier which is removed in t
 range(wine_data$free.sulfur.dioxide)
 grid.arrange(ggplot(aes(x=free.sulfur.dioxide),data=wine_data) +
   geom_histogram(binwidth=2,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=2,color='black') +
   scale_x_continuous(breaks=seq(0,72,5)),
 
 ggplot(aes(x=1,y=free.sulfur.dioxide),data=wine_data) +
-  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,
+               color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
-  scale_y_continuous(breaks=seq(0,72,5)))
+  scale_y_continuous(breaks=seq(0,72,5)) +
+  coord_cartesian(ylim=c(0,50)))
 
 summary(wine_data$free.sulfur.dioxide)
 ```
@@ -181,14 +189,14 @@ range(wine_data$total.sulfur.dioxide)
 
 grid.arrange(ggplot(aes(x=total.sulfur.dioxide),data=wine_data) +
   geom_histogram(binwidth=5,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=5,color='black') +
   scale_x_continuous(breaks=seq(5,175,10),limits=c(5,175)),
 
 ggplot(aes(x=1,y=total.sulfur.dioxide),data=wine_data) +
-  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,
+               color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
-  scale_y_continuous(breaks=seq(5,175,10)) +
-  coord_cartesian(ylim=c(5,175)))
+  scale_y_continuous(breaks=seq(5,175,20)) +
+  coord_cartesian(ylim=c(5,145)))
 
 summary(wine_data$total.sulfur.dioxide)
 ```
@@ -202,13 +210,14 @@ range(wine_data$density)
 
 grid.arrange(ggplot(aes(x=density),data=wine_data)  +
   geom_histogram(binwidth=0.001,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=0.001,color='black') +
   scale_x_continuous(breaks=seq(0.9,1.01,0.0015)),
   
 ggplot(aes(x=1,y=density),data=wine_data) +
-  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,
+               color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
-  scale_y_continuous(breaks=(seq(0.9,1.01,0.0015)))) 
+  scale_y_continuous(breaks=(seq(0.9,1.01,0.0015))) +
+  coord_cartesian(ylim=c(0.9915,1.0020))) 
 
 summary(wine_data$density)
 ```
@@ -223,13 +232,14 @@ range(wine_data$pH)
 
 grid.arrange(ggplot(aes(x=pH),data=wine_data) +
   geom_histogram(binwidth=.1,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=.1,color='black')+
   scale_x_continuous(breaks=seq(2,4.1,.1)), 
   
 ggplot(aes(x=1,y=pH),data=wine_data) +
-  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,
+               color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
-  scale_y_continuous(breaks=seq(2,4.1,.1)))
+  scale_y_continuous(breaks=seq(2,4.1,.1)) +
+  coord_cartesian(ylim=c(2.9,3.7)))
   
 summary(wine_data$pH)
 ```
@@ -242,14 +252,14 @@ The above distribution is also almost symmetric. Boxplot shows that 50 percent o
 range(wine_data$sulphates)
 grid.arrange(ggplot(aes(x=sulphates),data=wine_data) +
   geom_histogram(binwidth=.05,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=.05,color='black') +
   scale_x_continuous(breaks=seq(0,2,.1),limits=c(0.2,1.4)), 
 
 ggplot(aes(x=1,y=sulphates),data=wine_data) +
-  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,
+               color='black',fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
   scale_y_continuous(breaks=seq(0,2,.1)) +
-  coord_cartesian(ylim=c(0.2,1.4)))
+  coord_cartesian(ylim=c(0.4,1.1)))
 
 summary(wine_data$sulphates)
 
@@ -265,14 +275,15 @@ range(wine_data$alcohol)
 grid.arrange(
 ggplot(aes(x=alcohol),data=wine_data) +
   geom_histogram(binwidth=.5,color='black',fill='firebrick') +
-  geom_freqpoly(binwidth=.5,color='black') +
   scale_x_continuous(breaks=seq(8,14,.5),limits=c(8,14)), 
-  
+
+
 ggplot(aes(x=1,y=alcohol),data=wine_data) +
-  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black',fill='firebrick') +
+  geom_boxplot(outlier.size=2,outlier.color='blue',outlier.shape=4,color='black'
+               ,fill='firebrick') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=3,fill='pink') +
   scale_y_continuous(breaks=seq(8,14,.5)) +
-  coord_cartesian(ylim=c(8,14)))
+  coord_cartesian(ylim=c(8.5,14)))
 
 
 summary(wine_data$alcohol)
@@ -285,6 +296,7 @@ The distribution of alcohol is also right skewed. Boxplot shows that 50 percent 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality),data=wine_data) +
   geom_bar(color='black',fill='firebrick')
+
 
 ```
 
@@ -305,10 +317,8 @@ The dataset has 1599 rows with 11 numerical variables which determine the qualit
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 wine_data$quality = as.numeric(wine_data$quality)
 str(wine_data)
-c <- cor(wine_data[c(1,1:13)])
-
-corrplot(c, type = "lower", order = "hclust", 
-         tl.col = "black", tl.srt = 45)
+c <- cor(wine_data[c(1, 1:13)])
+corrplot(c,type = "lower",order = "hclust",tl.col = "black",tl.srt = 450)
 
 ```
 
@@ -336,8 +346,8 @@ Let's visualize the above findings through plots to get a better intuition.
 ###Fixed Acidity VS Citric Acid
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=fixed.acidity,y=citric.acid),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
+  geom_point(alpha=.5) +
+  geom_smooth(method='lm',color='red',se=FALSE)
 cor(wine_data$fixed.acidity,wine_data$citric.acid)
 ```
 
@@ -347,8 +357,8 @@ Above scatter plot shows the correlation between fixed acidity and citric acid.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=density,y=fixed.acidity),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
+  geom_point(alpha=.5) +
+  geom_smooth(method='lm',color='red',se=FALSE)
 
 cor(wine_data$density,wine_data$fixed.acidity)
 ```
@@ -359,8 +369,8 @@ Above scatter plot shows the correlation between density and fixed.acidity which
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=density,y=alcohol),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
+  geom_point(alpha=.5) +
+  geom_smooth(method='lm',color='red',se=FALSE)
 cor(wine_data$density,wine_data$alcohol)
 ```
 
@@ -370,8 +380,8 @@ Above scatter plot shows the correlation between density and alcohol which is ne
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=fixed.acidity,y=volatile.acidity),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
+  geom_point(alpha=.5) +
+  geom_smooth(method='lm',color='red',se=FALSE)
 cor(wine_data$fixed.acidity,wine_data$volatile.acidity)
 ```
 
@@ -381,8 +391,8 @@ Fixed.acidity seems to be slightly negatively correlated with volatile acidity.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=density,y=residual.sugar),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
+  geom_point(alpha=.5) +
+  geom_smooth(method='lm',color='red',se=FALSE)
 cor(wine_data$density,wine_data$residual.sugar)
 ```
 
@@ -392,8 +402,8 @@ Density is slightly positively correlated with residual.sugar. This might be bec
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=density,y= volatile.acidity),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
+  geom_point(alpha=.5) +
+  geom_smooth(method='lm',color='red',se=FALSE)
 cor(wine_data$density,wine_data$volatile.acidity)
 ```
 
@@ -403,8 +413,8 @@ Looks like there is no much correlation between volatile acidity and density.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=fixed.acidity,y= pH),data=wine_data) +
-  geom_point() +
-  geom_smooth(method='lm',color='red')
+  geom_point(alpha=.5) +
+  geom_smooth(method='lm',color='red',se=FALSE)
 cor(wine_data$fixed.acidity,wine_data$pH)
 ```
 
@@ -417,7 +427,8 @@ Fixed acidity and pH are negatively correlated. This is obvious because with inc
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 wine_data$quality <- factor(wine_data$quality,ordered=T)
 ggplot(aes(x=quality,y=alcohol),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
+  geom_violin(color='black',fill='firebrick') +
+  geom_boxplot(width=.1,color='black',fill='blue') +
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq(8,15,.5))
@@ -431,7 +442,8 @@ From the above plot we can see that higher alcohol content is associated with go
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=citric.acid),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
+  geom_violin(color='black',fill='firebrick') +
+  geom_boxplot(width=.1,color='black',fill='blue') +
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq(0,1,.1)) +
@@ -445,7 +457,8 @@ From the above plot we can see that the higher citric acid content is associated
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=density),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
+  geom_violin(color='black',fill='firebrick') +
+  geom_boxplot(width=.1,color='black',fill='blue') +
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq(0.99,1.01,0.001)) 
@@ -458,7 +471,8 @@ Density seems to have decreasing effect on quality which might be due to the dec
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=volatile.acidity),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
+  geom_violin(color='black',fill='firebrick') +
+  geom_boxplot(width=.1,color='black',fill='blue') +
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq(.12,1.58,.1))
@@ -471,8 +485,8 @@ Volatile acidity definitely has a decreasing effect on the quality of the wine.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=chlorides),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
-  geom_jitter(alpha=.5) +
+  geom_violin(color='black',fill='firebrick') +
+  geom_boxplot(width=.1,color='black',fill='blue') +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq()) +
   coord_cartesian(ylim=c(0.01,0.17))
@@ -486,7 +500,8 @@ Chloride too has a negative effect on the quality of the wine.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=sulphates),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
+  geom_violin(color='black',fill='firebrick') +
+  geom_boxplot(width=.1,color='black',fill='blue') +
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq(0,2,.1)) +
@@ -502,7 +517,8 @@ Sulphates has a positive impact on the quality of the wine.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=residual.sugar),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
+  geom_violin(color='black',fill='firebrick') +
+  geom_boxplot(width=.1,color='black',fill='blue') +
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq(0,16,.5)) +
@@ -518,7 +534,8 @@ Residual sugar does not seem to have any impact on the quality of the wine.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=free.sulfur.dioxide),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
+  geom_violin(color='black',fill='firebrick') +
+  geom_boxplot(width=.1,color='black',fill='blue') +
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
   scale_y_continuous(breaks=seq(0,72,5)) +
@@ -549,8 +566,7 @@ Fixed acidity VS Alcohol
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
 ggplot(aes(x=fixed.acidity,y=alcohol,color=quality_rating),data=wine_data) +
-  geom_point(stat='summary',fun.y='mean') +
-  geom_line(stat='summary',fun.y='mean') 
+  geom_point(stat='summary',fun.y='mean') 
 
 
 ```
@@ -562,8 +578,7 @@ Citric acid VS Alcohol
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
 ggplot(aes(x=citric.acid,y=alcohol,color=quality_rating),data=wine_data) +
-  geom_point(stat='summary',fun.y='mean') +
-  geom_line(stat='summary',fun.y='mean') 
+  geom_point(stat='summary',fun.y='mean') 
 
 
 ```
@@ -575,8 +590,7 @@ From the above plot we can see that the higher citric acid content is associated
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
   ggplot(aes(x=alcohol,y=citric.acid,color=quality_rating),data=wine_data) +
-  geom_point(stat='summary',fun.y='mean') +
-  geom_line(stat='summary',fun.y='mean') 
+  geom_point(stat='summary',fun.y='mean')
 
 
 ```
@@ -589,8 +603,7 @@ Chlorides VS Alcohol
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
   ggplot(aes(x=alcohol,y=chlorides,color=quality_rating),data=wine_data) +
-  geom_point(stat='summary',fun.y='mean') +
-  geom_line(stat='summary',fun.y='mean') 
+  geom_point(stat='summary',fun.y='mean') 
 
 
 ```
@@ -602,8 +615,7 @@ Sulphates VS Alcohol
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
   ggplot(aes(x=alcohol,y=sulphates,color=quality_rating),data=wine_data) +
-  geom_point(stat='summary',fun.y='mean') +
-  geom_line(stat='summary',fun.y='mean') 
+  geom_point(stat='summary',fun.y='mean') 
 
 
 ```
@@ -615,10 +627,7 @@ Residual sugar VS Alcohol
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
   ggplot(aes(x=alcohol,y=residual.sugar,color=quality_rating),data=wine_data) +
-  geom_point(stat='summary',fun.y='mean') +
-  geom_line(stat='summary',fun.y='mean') 
-
-
+  geom_point(stat='summary',fun.y='mean') 
 ```
 
 Residual sugar does not seem to have any effect on the quality of the wine.
@@ -639,14 +648,17 @@ Chlorides seems to have negative impact on the quality wherease sulphates seems 
 
 ### Plot One
 
-Quality VS Alcohol
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x=quality,y=alcohol),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
+  geom_violin(color='black',fill='firebrick') +
+  geom_boxplot(width=.1,color='black',fill='blue') +
   geom_jitter(alpha=.5) +
   stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
-  scale_y_continuous(breaks=seq(8,15,.5))
+  scale_y_continuous(breaks=seq(8,15,.5)) +
+  ylab('alcohol (%)') +
+  ggtitle('Quality VS Alcohol')
 ```
 
 This plot shows that alcohol affects the quality of wine in a positive way. With increase in the alcohol percentage the quality of the wine is better.
@@ -656,37 +668,38 @@ This plot shows that alcohol affects the quality of wine in a positive way. With
 
 ### Plot Two
 
-Quality VS Citric Acid
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x=quality,y=citric.acid),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
-  geom_jitter(alpha=.5) +
-  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
-  scale_y_continuous(breaks=seq(0,1,.1)) +
-  coord_cartesian(ylim=c(0,.75))
+
+ggplot(aes(x=citric.acid,y=alcohol,color=quality_rating),data=wine_data) +
+  geom_point(stat='summary',fun.y='mean') +
+  ylab('alcohol (%)') +
+  xlab('citric.acid (g / dm^3)') +
+  ggtitle('Quality VS Citric Acid')
+
 
 ```
 
-Citric acid also adds to the quality of wine mostly due to the sour taste it adds to the wine. Citric acid in combination with alcohol are the major factors which determines the quality of the wine.
+Citric acid also adds to the quality of wine in addition to alcohol mostly due to the sour taste it adds to the wine. Citric acid in combination with alcohol are the major factors which determines the quality of the wine.
 
 ### Description Two
 
 
 ### Plot Three
 
-Quality VS Volatile Acidity 
-
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x=quality,y=volatile.acidity),data=wine_data) +
-  geom_boxplot(outlier.shape=4,outlier.color=4,color='black',fill='firebrick')+
-  geom_jitter(alpha=.5) +
-  stat_summary(fun.y='mean',geom='point',shape=23,size=2,fill='pink') +
-  scale_y_continuous(breaks=seq(.12,1.58,.1))
+ggplot(aes(x=density,y=alcohol),data=wine_data) +
+  geom_point(alpha=.5) +
+  geom_smooth(method='lm',color='red',se=FALSE) +
+  ylab('alcohol (%)') +
+  xlab('density (g / cm^3)') +
+  ggtitle('Quality VS Volatile Acidity')
+
 ```
 
 ### Description Three
-Volatile acidity degrades the quality of the wine. It spoils the wine taste. Thus lower the volatile acidity content better will be the quality of the wine.
+The above plot clearly shows that the density of wine is negatively correlated with percentage of acohol. This is true because with increase in mass of wine the percentage of ethanal will reduce.
 
 ------
 
